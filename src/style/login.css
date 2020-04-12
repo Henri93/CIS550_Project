@@ -16,4 +16,13 @@
     background-color: #b50e14;
     color: #b50e14;
   }
+  .pStyle {
+    text-align: center;
+   
+    padding: 20px;
+  }
+
+  .aStl{
+    color: #b50e14;
+  }
 }

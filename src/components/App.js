@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import Map from './Map';
 import Login from './Login';
+import Signup from './Signup';
 
 
 export default class App extends React.Component {
@@ -26,6 +27,12 @@ export default class App extends React.Component {
 							path="/login"
 							render={() => (
 								<Login />
+							)}
+						/>
+						<Route
+							path="/signup"
+							render={() => (
+								<Signup />
 							)}
 						/>
 					</Switch>

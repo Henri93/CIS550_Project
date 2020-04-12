@@ -35,10 +35,16 @@ export default function Login() {
             type="password"
           />
         </FormGroup>
+        
         <Button style={{ backgroundColor: "red",   borderColor: "red"}} block  type="submit">
           Login
         </Button>
+
       </form>
+      <div className = "pStyle">
+        <a  className = "aStl" href = "signup">Don't have an account? Sign up here!</a>
+      </div>
+      
     </div>
   );
 }
