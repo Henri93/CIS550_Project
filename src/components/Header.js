@@ -57,7 +57,7 @@ export default class PageNavbar extends React.Component {
           aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user"></i> Jacob's Profile </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-          <a class="dropdown-item" href="#">My account</a>
+          <a class="dropdown-item" href="/myprofile">My account</a>
           <a class="dropdown-item" href="/login">Log out</a>
         </div>
       </li>

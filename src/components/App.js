@@ -7,7 +7,7 @@ import {
 import Map from './Map';
 import Login from './Login';
 import Signup from './Signup';
-
+import MyProfile from './MyProfile';
 
 export default class App extends React.Component {
 
@@ -33,6 +33,12 @@ export default class App extends React.Component {
 							path="/signup"
 							render={() => (
 								<Signup />
+							)}
+						/>
+							<Route
+							path="/myprofile"
+							render={() => (
+								<MyProfile />
 							)}
 						/>
 					</Switch>

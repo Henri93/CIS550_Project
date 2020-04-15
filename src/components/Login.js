@@ -16,35 +16,38 @@ export default function Login() {
 
   return (
     <div className="Login">
-      <h1 className = "h1-center">Yelp</h1>
-      <form onSubmit={handleSubmit}>
-        <FormGroup controlId="email" bsSize="large">
-          <FormLabel>Email</FormLabel>
-          <FormControl
-            autoFocus
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
-          <FormLabel>Password</FormLabel>
-          <FormControl
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            type="password"
-          />
-        </FormGroup>
-        
-        <Button style={{ backgroundColor: "red",   borderColor: "red"}} block  type="submit">
-          Login
+      <div className="nicerLog">
+        <h1 className="h1-center">Yelp</h1>
+        <form onSubmit={handleSubmit} className="emailEr">
+          <FormGroup className="topper" controlId="email" bsSize="large">
+            <FormControl
+              autoFocus
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+            <FormControl
+              value={password}
+              placeholder="Password"
+              onChange={e => setPassword(e.target.value)}
+              type="password"
+            />
+          </FormGroup>
+
+          <Button style={{ backgroundColor: "red", borderColor: "red" }} block type="submit">
+            Login
         </Button>
 
-      </form>
-      <div className = "pStyle">
-        <a  className = "aStl" href = "signup">Don't have an account? Sign up here!</a>
+        </form>
+        <div className="pStyle">
+          <a className="aStl" href="signup">Don't have an account? <br></br> Sign up here!</a>
+        </div>
       </div>
-      
+
+
     </div>
   );
 }
