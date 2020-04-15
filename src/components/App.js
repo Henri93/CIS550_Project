@@ -7,7 +7,9 @@ import {
 import Map from './Map';
 import Login from './Login';
 import Signup from './Signup';
-import MyProfile from './MyProfile';
+import Profile from './Profile';
+import Business from './Business'
+import Review from './Review'
 
 export default class App extends React.Component {
 
@@ -35,10 +37,26 @@ export default class App extends React.Component {
 								<Signup />
 							)}
 						/>
-							<Route
-							path="/myprofile"
+						<Route
+							path="/profile/:name"
+							component = {Profile}
+
 							render={() => (
-								<MyProfile />
+								<Profile />
+							)}
+						/>
+						<Route
+							path="/business/:businessname"
+							component = {Business}
+							render={() => (
+								<Business />
+							)}
+						/>
+						<Route
+							path="/review/:businessname"
+							component = {Review}
+							render={() => (
+								<Business />
 							)}
 						/>
 					</Switch>

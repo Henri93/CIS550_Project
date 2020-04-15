@@ -12,14 +12,14 @@ export default class PageNavbar extends React.Component {
 	}
 
 	componentDidMount() {
-		const pageList = ['Map', 'My Profile'];
+		const pageList = ['Map', 'My Profile', 'Reccomendations'];
 
 		let navbarDivs = pageList.map((page, i) => {
 			if (this.props.active === page) {
-				return <a className="nav-item nav-link active" key={i} href={"/" + page}>{page.charAt(0).toUpperCase() + page.substring(1, page.length)}</a>
+				return <a className="nav-item nav-link active" key={i} href={"/"}>{page.charAt(0).toUpperCase() + page.substring(1, page.length)}</a>
 			}
 			else {
-				return <a className="nav-item nav-link" key={i} href={"/" + page}>{page.charAt(0).toUpperCase() + page.substring(1, page.length)}</a>
+				return <a className="nav-item nav-link" key={i} href={"/"}>{page.charAt(0).toUpperCase() + page.substring(1, page.length)}</a>
 			}
 		})
 
@@ -57,7 +57,7 @@ export default class PageNavbar extends React.Component {
           aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user"></i> Jacob's Profile </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-          <a class="dropdown-item" href="/myprofile">My account</a>
+          <a class="dropdown-item" href="/profile/jacob platin">My account</a>
           <a class="dropdown-item" href="/login">Log out</a>
         </div>
       </li>

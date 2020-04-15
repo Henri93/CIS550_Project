@@ -14,7 +14,8 @@
     "react-router-dom": "^5.1.2",
     "popper.js": "1.14.3",
     "jquery": "3.5.0",
-    "react-bootstrap": "1.0.0"
+    "react-bootstrap": "1.0.0",
+    "react-star-ratings": "2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

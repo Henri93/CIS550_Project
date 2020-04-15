@@ -7,19 +7,20 @@ import {
   } from "react-google-maps";
   import * as parkData from "../data/skate.json";
   import mapStyles from "../style/mapStyles";
+
   import React, { useState, useEffect } from "react";
+  import "../style/markerWindowStyles.css"
 
   import PageNavbar from '../components/Header';
-  import { library } from '@fortawesome/fontawesome-svg-core'
-  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-  import { faStar } from '@fortawesome/free-solid-svg-icons'
-  
+  import StarRatings from 'react-star-ratings';
+  import {
+    BrowserRouter as Router,
+    useParams
+  } from "react-router-dom";
 
 
-library.add(faStar)
 function MapCreator() {
   const [selectedPark, setSelectedPark] = useState(null);
-
   useEffect(() => {
     const listener = e => {
       if (e.key === "Escape") {
@@ -39,20 +40,18 @@ function MapCreator() {
       defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
       defaultOptions={{ styles: mapStyles }}
     >
-                <Marker position={{ lat: 45.4211, lng: -75.6903}} />
-
       {parkData.features.map(park => (
         <Marker
           key={park.properties.PARK_ID}
           position={{
-            lat: 45.4211,
-            lng: -75.6903
+            lat: park.geometry.coordinates[1],
+            lng: park.geometry.coordinates[0]
           }}
           onClick={() => {
             setSelectedPark(park);
           }}
           icon={{
-            url: `/skateboarding.svg`,
+          
             scaledSize: new window.google.maps.Size(25, 25)
           }}
         />
@@ -70,18 +69,19 @@ function MapCreator() {
           style = {{backgroundColor: "red"}}
         >
           <div style={{"textAlign" : "center"}}> 
-            <h2>{selectedPark.properties.NAME}</h2>
+            <a className = "businessLink" href = {"/business/" + selectedPark.properties.NAME}>{selectedPark.properties.NAME}</a>
+            <br></br>
+            <StarRatings
+              rating={2.43}
+              starRatedColor="red"
+              numberOfStars={5}
+              starDimension="25px"
+              starSpacing="2px"
+              name='rating'
+            />
             <p>{selectedPark.properties.DESCRIPTIO}</p>
-            <p>   name, categories, review_count, stars</p>
-            <div className="star-rating">
-              <FontAwesomeIcon icon={faStar} data-rating="1" />
-              <FontAwesomeIcon icon={faStar} data-rating="2" />
-              <FontAwesomeIcon icon={faStar}data-rating="3" />
-              <FontAwesomeIcon icon={faStar}  data-rating="4"/>
-              <FontAwesomeIcon icon={faStar} data-rating="5"/>
-              <input type="hidden" name="whatever1" className="rating-value" value="2.56"/>
-
-            </div>
+            {/* <p>   name, categories, review_count, stars</p> */}
+           
           </div>
         </InfoWindow>
       )}
