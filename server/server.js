@@ -11,6 +11,7 @@ const app = express();
 
 // add routes
 var user = require('./routes/user')
+var business = require('./routes/business')
 
 // set our port to either a predetermined port number if you have set it up, or 3000
 // now we should configure the API to use bodyParser and look for JSON data in the request body
@@ -27,6 +28,9 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 /* Routes involving Users crud */
 app.use('/login', user.login);
 app.use('/signup', user.signup);
+
+/* Routes involving Businesses */
+app.get('/getHomeBusinesses', business.getHomeBusinesses);
 
 app.get('/api', (req,res) => {
   //dummy route to test serving data to frontend

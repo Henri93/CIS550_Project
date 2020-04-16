@@ -66,9 +66,23 @@ var myDB_createAccount = function(username, password, name, route_callbck){
     // });
 };
 
+/*
+ * Function to get businesses to display on map for an area
+ * @Return list of business objects
+ */
+var myDB_getBusinessForArea = function(area, route_callbck){
+    //TODO add query that returns businesses
+    
+    //dummy return of businesses
+    route_callbck([
+        
+    ], null);
+}
+
 var database = {
     validateLogin: myDB_validateLogin,
-    createAccount: myDB_createAccount
+    createAccount: myDB_createAccount,
+    getBusinessForArea: myDB_getBusinessForArea
   };
   
   module.exports = database;
