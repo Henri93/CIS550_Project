@@ -33,7 +33,7 @@ app.get('/api', (req,res) => {
 });
 
 app.get('*', login.isAuthenticated, (req,res) => {
-  
+  res.status(500).send('Something broke!');
 });
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));

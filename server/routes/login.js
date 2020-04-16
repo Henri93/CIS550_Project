@@ -1,3 +1,4 @@
+var db = require('../database/database.js');
 var express = require('express')
 var router = express.Router()
 
@@ -7,19 +8,31 @@ function isAuthenticated(req, res, next) {
         return next();
     
     // if not authenticated then redirect to login
-    res.redirect('/login');
+    res.redirect('/');
 }
-  
-// define the login route
-router.get('/', function (req, res) {
-  res.send('You are not logged in to access this page')
-})
 
+/*
+ * Route for checking login credentials
+ */
 router.post('/', function (req, res) {
     //Attempt to login the user with credentials given
-    //TODO implement this logic
-    console.log("Login attempt for " + req.body.email + " with password " + req.body.password)
-    res.json({success: true});
+    var username = req.body.email;
+	var password = req.body.password;
+    console.log("Login attempt for " + username + " with password " + password);
+
+	db.validateLogin(username, password, function(data, err) {
+		if(data == null && err != null){
+			//send error with login
+			res.json({success: false, err: err});
+		}else{
+			//save user logged in to session
+			req.session.user = username;
+			req.session.authenticated = true;
+
+			//return success
+			res.json({success: true, res: data['username']});
+		}
+  });
 })
 
 module.exports = { 
