@@ -14,6 +14,7 @@ import {
   import PageNavbar from '../components/Header';
   import StarRatings from 'react-star-ratings';
 
+  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 function MapCreator() {

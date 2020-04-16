@@ -16,15 +16,15 @@ export default class PageNavbar extends React.Component {
 
 	componentDidMount() {
 		const pageList = ['Map', 'My Profile', 'Reccomendations'];
+		const username = "jacob platin";
+		let hrefs = ['', 'profile/' + username,'reccomendations/' + username];
 		let navbarDivs = pageList.map((page, i) => {
 
-			var cur_user_page = (page == "My Profile") ? "profile/jacob platin" : page;
-
 			if (this.props.active === page) {
-				return <a className="nav-item nav-link active" key={i} href={"/" + cur_user_page}>{page.charAt(0).toUpperCase() + page.substring(1, page.length)}</a>
+				return <a className="nav-item nav-link active" key={i} href={"/" + hrefs[i]}>{page.charAt(0).toUpperCase() + page.substring(1, page.length)}</a>
 			}
 			else {
-				return <a className="nav-item nav-link" key={i} href={"/" + cur_user_page}>{page.charAt(0).toUpperCase() + page.substring(1, page.length)}</a>
+				return <a className="nav-item nav-link" key={i} href={"/" + hrefs[i]}>{page.charAt(0).toUpperCase() + page.substring(1, page.length)}</a>
 			}
 		})
 
@@ -41,7 +41,7 @@ export default class PageNavbar extends React.Component {
 			<div className="PageNavbar" >
 				<nav className="navbar navbar-expand-lg navbar-light bg-light">	
 
-			      <span style = {{"color":"#ff4a4a"}} className="navbar-brand center">Help Yelp</span>
+			      <span style = {{"color":"#ff4a4a"}} className="navbar-brand center">Yelp</span>
 			      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
 			        <div  className="navbar-nav">
 			        {this.state.navDivs}
@@ -69,6 +69,7 @@ export default class PageNavbar extends React.Component {
           <i  class="fas fa-user"></i> Jacob's Profile </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
           <a class="dropdown-item" href="/profile/jacob platin">My account</a>
+		  <a class="dropdown-item" href="/reccomendations/jacob platin">Reccomendations</a>
           <a class="dropdown-item" href="/login">Log out</a>
         </div>
       </li>

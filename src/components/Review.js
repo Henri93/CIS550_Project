@@ -55,7 +55,7 @@ export default class Review extends React.Component {
                     </textarea>
                     <br></br>
                     <a href={"/business/" + this.state.businessName} type="button" class="reviewBut btn btn-outline-warning">Submit your review!</a>
-
+                    
 
 
                 </div>

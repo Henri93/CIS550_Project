@@ -11,6 +11,7 @@ import Signup from './Signup';
 import Profile from './Profile';
 import Business from './Business';
 import Review from './Review';
+import Reccomendations from './Reccomendations';
 
 export default class App extends React.Component {
 
@@ -64,7 +65,14 @@ export default class App extends React.Component {
 								path="/review/:businessname"
 								component={Review}
 								render={() => (
-									<Business />
+									<Review />
+								)}
+							/>
+							<Route
+								path="/reccomendations/:name"
+								component={Reccomendations}
+								render={() => (
+									<Reccomendations />
 								)}
 							/>
 					</Switch>
