@@ -1,17 +1,40 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../style/login.css"
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
   }
 
+  function postLogin(){
+    fetch('/login', {
+      method: 'POST',
+      headers: { 
+          'Content-Type': 'application/json',
+      },
+        body: JSON.stringify({ email: email, password: password })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        if(data.success) {
+          //successful login so redirect to homepage
+          history.push("/");
+        }else{
+          //display error login msg
+        }
+    });
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
+    postLogin();
   }
 
   return (
