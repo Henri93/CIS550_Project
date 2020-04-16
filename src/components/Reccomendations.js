@@ -37,7 +37,8 @@ export default class Reccomendations extends React.Component {
 
 
                     <h1 className="bizTitle"> {this.state.username}</h1>
-
+                    <br></br>
+                    <p className="based">Based on your activity, we reccomend you check out the following people:</p>
 
                 </div>
                 <span class="nameSpan">{this.state.initial}</span>

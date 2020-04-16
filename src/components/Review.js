@@ -45,7 +45,7 @@ export default class Review extends React.Component {
                         rating={0}
                         starRatedColor="red"
                         numberOfStars={5}
-                        starDimension="2.2vw"
+                        starDimension="1.6vw"
                         starSpacing="0.1vw"
                         changeRating={this.changeRating}
                         name='rating'
@@ -55,7 +55,7 @@ export default class Review extends React.Component {
                     </textarea>
                     <br></br>
                     <a href={"/business/" + this.state.businessName} type="button" class="reviewBut btn btn-outline-warning">Submit your review!</a>
-                    
+
 
 
                 </div>
