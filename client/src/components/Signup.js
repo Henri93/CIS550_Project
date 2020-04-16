@@ -1,17 +1,41 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../style/signup.css"
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
   }
 
+  function postSignup(){
+    fetch('/signup', {
+      method: 'POST',
+      headers: { 
+          'Content-Type': 'application/json',
+      },
+        //TODO add name passed in to post body
+        body: JSON.stringify({ email: email, password: password })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        if(data.success) {
+          //successful signup so redirect to homepage
+          history.push("/");
+        }else{
+          //display error signup msg
+        }
+    });
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
+    postSignup();
   }
 
   return (

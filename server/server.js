@@ -10,7 +10,7 @@ var session = require('express-session');
 const app = express();
 
 // add routes
-var login = require('./routes/login')
+var user = require('./routes/user')
 
 // set our port to either a predetermined port number if you have set it up, or 3000
 // now we should configure the API to use bodyParser and look for JSON data in the request body
@@ -24,7 +24,9 @@ app.use(session({secret: "cis550"}));
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/login', login.router);
+/* Routes involving Users crud */
+app.use('/login', user.login);
+app.use('/signup', user.signup);
 
 app.get('/api', (req,res) => {
   //dummy route to test serving data to frontend
@@ -32,7 +34,7 @@ app.get('/api', (req,res) => {
   res.json(list);
 });
 
-app.get('*', login.isAuthenticated, (req,res) => {
+app.get('*', user.isAuthenticated, (req,res) => {
   res.status(500).send('Something broke!');
 });
 

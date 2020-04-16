@@ -1,6 +1,5 @@
 var db = require('../database/database.js');
 var express = require('express')
-var router = express.Router()
 
 // middleware that checks if user is authenticated
 function isAuthenticated(req, res, next) {
@@ -14,7 +13,7 @@ function isAuthenticated(req, res, next) {
 /*
  * Route for checking login credentials
  */
-router.post('/', function (req, res) {
+let login = function(req, res, next) {
     //Attempt to login the user with credentials given
     var username = req.body.email;
     var password = req.body.password;
@@ -33,9 +32,33 @@ router.post('/', function (req, res) {
             res.json({success: true, res: data['username']});
         }
     });
-})
+}
+
+/*
+ * Route for creating a user when signing up
+ */
+let signup = function(req, res, next) {
+	var username = req.body.email;
+	var password = req.body.password;
+	var name = req.body.name;
+
+	db.createAccount(username, password, name, function(data, err) {
+		if(data == null && err != null){
+			//error signing up
+			res.json({success: false, err: err});
+		}else{
+			//save user logged in to session
+            req.session.user = username;
+            req.session.authenticated = true;
+            
+            //return success
+            res.json({success: true, res: data['username']});
+		}
+  	});
+};
 
 module.exports = { 
-    router:router,
+    login:login,
+    signup: signup,
     isAuthenticated:isAuthenticated
 }
