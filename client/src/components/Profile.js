@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import PageNavbar from '../components/Header';
+import PageNavbar from './Header';
 import "../style/profile.css"
 
 

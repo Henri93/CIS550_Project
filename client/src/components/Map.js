@@ -11,7 +11,7 @@ import {
   import React, { useState, useEffect } from "react";
   import "../style/markerWindowStyles.css"
 
-  import PageNavbar from '../components/Header';
+  import PageNavbar from './Header';
   import StarRatings from 'react-star-ratings';
 
   import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
