@@ -6,7 +6,7 @@ import "../style/profile.css"
 
 
 
-export default class Review extends React.Component {
+export default class Profile extends React.Component {
     constructor(props) {
         super(props);
 
@@ -19,20 +19,28 @@ export default class Review extends React.Component {
 
     componentDidMount() {
 
-        this.username = (this.props.location.pathname.split('/')[2]).toUpperCase();
-        this.setState({ username: this.username });
+        this.initial = (this.props.location.pathname.split('/')[2]).toUpperCase()[0];
+        this.username = (this.props.location.pathname.split('/')[2]);
 
+        this.setState({ username: this.username });
+        this.setState({ initial: this.initial });
     }
     render() {
         return (
             <div>
                 <div >
-                    <PageNavbar active="dashboard" />
+                    <PageNavbar active="My Profile" />
                 </div>
                 <div className="topPic">
                 </div>
-                <div className="floater">      </div>
-                <span class="nameSpan">{this.state.username[0]}</span>
+                <div className="floater">
+
+
+                    <h1 className="bizTitle"> {this.state.username}</h1>
+
+
+                </div>
+                <span class="nameSpan">{this.state.initial}</span>
 
             </div>
         );

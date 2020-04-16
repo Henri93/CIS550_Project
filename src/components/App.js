@@ -2,14 +2,15 @@ import React from 'react';
 import {
 	BrowserRouter as Router,
 	Route,
-	Switch
+	Switch,
+	Redirect
 } from 'react-router-dom';
 import Map from './Map';
 import Login from './Login';
 import Signup from './Signup';
 import Profile from './Profile';
-import Business from './Business'
-import Review from './Review'
+import Business from './Business';
+import Review from './Review';
 
 export default class App extends React.Component {
 
@@ -26,39 +27,46 @@ export default class App extends React.Component {
 							)}
 						/>
 						<Route
-							path="/login"
+							exact
+							path="/Map"
 							render={() => (
-								<Login />
+								<Redirect to = "/" />
 							)}
 						/>
 						<Route
-							path="/signup"
-							render={() => (
-								<Signup />
-							)}
-						/>
-						<Route
-							path="/profile/:name"
-							component = {Profile}
+								path="/login"
+								render={() => (
+									<Login />
+								)}
+							/>
+							<Route
+								path="/signup"
+								render={() => (
+									<Signup />
+								)}
+							/>
+							<Route
+								path="/profile/:name"
+								component={Profile}
 
-							render={() => (
-								<Profile />
-							)}
-						/>
-						<Route
-							path="/business/:businessname"
-							component = {Business}
-							render={() => (
-								<Business />
-							)}
-						/>
-						<Route
-							path="/review/:businessname"
-							component = {Review}
-							render={() => (
-								<Business />
-							)}
-						/>
+								render={() => (
+									<Profile />
+								)}
+							/>
+							<Route
+								path="/business/:businessname"
+								component={Business}
+								render={() => (
+									<Business />
+								)}
+							/>
+							<Route
+								path="/review/:businessname"
+								component={Review}
+								render={() => (
+									<Business />
+								)}
+							/>
 					</Switch>
 				</Router>
 			</div>

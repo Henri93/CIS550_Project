@@ -13,10 +13,7 @@ import {
 
   import PageNavbar from '../components/Header';
   import StarRatings from 'react-star-ratings';
-  import {
-    BrowserRouter as Router,
-    useParams
-  } from "react-router-dom";
+
 
 
 function MapCreator() {
@@ -33,6 +30,7 @@ function MapCreator() {
       window.removeEventListener("keydown", listener);
     };
   }, []);
+  
 
   return (
     <GoogleMap
@@ -96,16 +94,16 @@ const MapWrapped = withScriptjs(withGoogleMap(MapCreator));
 export default function Map() {
     return (
       <div style={{ width: "100vw", height: "94vh" }}>
-            <PageNavbar active="dashboard" />
+            <PageNavbar hide_search={false} active="Map" />
   
-        <MapWrapped
+        {/* <MapWrapped
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${
             process.env.REACT_APP_GOOGLE_KEY
           }`}
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} />}
-        />
+        /> */}
       </div>
     );
   }
