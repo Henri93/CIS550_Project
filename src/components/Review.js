@@ -3,18 +3,31 @@ import React, { useState, useEffect } from "react";
 import PageNavbar from '../components/Header';
 import "../style/review.css"
 import StarRatings from 'react-star-ratings';
-
+import { Button, Modal } from 'react-bootstrap'
 
 export default class Review extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            businessName: ""
+            businessName: "",
+            setIsOpen: false,
+            isOpen: false
         };
 
 
+
     }
+
+
+    showModal = () => {
+        this.setState({ isOpen: true });
+
+    };
+
+    hideModal = () => {
+        this.setState({ isOpen: false });
+    };
 
     componentDidMount() {
 
@@ -23,11 +36,12 @@ export default class Review extends React.Component {
 
     }
 
-    changeRating( newRating, name ) {
+    changeRating(newRating, name) {
         this.setState({
-          rating: newRating
+            rating: newRating
         });
-      }
+    }
+
 
     render() {
         return (
@@ -54,13 +68,21 @@ export default class Review extends React.Component {
                     <textarea className="reviewBox">
                     </textarea>
                     <br></br>
-                    <a href={"/business/" + this.state.businessName} type="button" class="reviewBut btn btn-outline-warning">Submit your review!</a>
-
+                    <a onClick={this.showModal} type="button" class="reviewBut btn btn-outline-warning">Submit your review!</a>
+                    <Modal show={this.state.isOpen} onHide={this.hideModal}>
+                        <Modal.Header>
+                        <Modal.Title>Congratulations!</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>Your review has been submitted!</Modal.Body>
+                        <Modal.Footer>
+                        <a style = {{"margin":"auto"}} href={"/business/" + this.state.businessName} type="button" class="reviewBut btn btn-outline-warning" onClick={this.hideModal}>Awesome!</a>
+                        </Modal.Footer>
+                    </Modal>
 
 
                 </div>
                 <span class="nameSpan">{this.state.businessName[0]}</span>
-                
+
             </div>
         );
     }
