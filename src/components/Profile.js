@@ -54,27 +54,22 @@ export default class Profile extends React.Component {
                         <p style={{ "display": "inline-block", "fontWeight": "100", "fontSize": "1.5em", "marginLeft": "0.3vw" }}> Reviews Left: 500</p>
                     </div>
 
-                    <hr className="newPageBreak"></hr>
                     <p onClick={this.toggleVisibility} className={this.state.onProfile ? 'profPHigh' : 'profP'}>My Profile</p>
                     <p onClick={this.toggleVisibility} className={this.state.onProfile ? 'compP' : 'compPHigh'}>Your Friends</p>
 
 
                     <div className={this.state.onProfile ? 'profileArea' : 'hidden'}>
-                        <h3>Some info about you...</h3>
+                        <br></br>
+                        <h3>What people are saying about you...</h3>
+                        <br></br>
 
                         <div class="container">
                             <div class="row">
 
                                 {this.state.names.map(name => (
-                                    <div class="col-sm-3">
-                                        <div class="card" style={{ "width": "18rem" }}>
-                                            <div style={{ "height": "8vw" }} class="card-header">
-                                                <span class="nameSpanForCard">{this.state.initial}</span>
-                                            </div>
-                                            <div class="card-body">
-                                                <p class="card-text">{name}</p>
-                                            </div>
-                                        </div>
+                                    <div class="col-sm-2">
+                                        <span class="nameSpanProfile">100</span>
+                                        <p >{name}</p>
                                     </div>
                                 ))}
 

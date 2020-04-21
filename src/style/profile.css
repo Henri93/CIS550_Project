@@ -56,15 +56,16 @@ html,body{
 .profP {
     display: inline-block;
     margin-top: 0.3vw;
-    font-size: 1.6em;
+    font-size: 1.1em;
     cursor: grab;
+    margin-right: 1.8vw;
 
 }
 
 .compP{
     display: inline-block;
     margin-left: 1.8vw;
-    font-size: 1.6em;
+    font-size: 1.1em;
     cursor: grab;
 
 }
@@ -72,29 +73,25 @@ html,body{
 .profPHigh {
     display: inline-block;
     margin-top: 0.3vw;
-    font-size: 1.6em;
+    font-size: 1.1em;
     cursor: grab;
-    color:orange; 
-    border:1px;
-    border-style: solid;
+    color:white; 
+    background-color: orange;
     border-radius: 20px;
-    border-color: gray;
-    padding: 0.3vw;
+    padding: 0.4vw;
 
 
 }
 
 .compPHigh{
     display: inline-block;
-    margin-left: 1.8vw;
-    font-size: 1.6em;
+    margin-top: 0.3vw;
+    font-size: 1.1em;
     cursor: grab;
-    color:orange; 
-    border:1px;
-    border-style: solid;
+    color:white; 
+    background-color: orange;
     border-radius: 20px;
-    border-color: gray;
-    padding: 0.3vw;
+    padding: 0.4vw;
 
 
 
@@ -120,4 +117,21 @@ p:hover{
 
 .hidden {
     visibility: hidden;
+}
+
+.nameSpanProfile{
+    height: 6.5vw;
+    width: 6.5vw;
+    box-shadow:  0 0 0 2px orange;
+    background-color: white;
+    position: absolute;
+    border-radius: 51%;
+    z-index: 12;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 3vw;
+    color: orange;
 }
