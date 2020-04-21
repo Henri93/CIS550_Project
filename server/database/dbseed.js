@@ -12,7 +12,8 @@ const con = mysql.createConnection({
 con.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
-    con.query(`SHOW TABLES;`, function(err, result, fields) {
+
+    con.query(`SELECT * FROM Users;`, function(err, result, fields) {
         if (err) throw (err);
         if (result) console.log(result);
     });

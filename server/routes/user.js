@@ -24,6 +24,7 @@ let login = function(req, res, next) {
             //send error with login
             res.json({success: false, err: err});
         }else{
+            console.log(data)
             //save user logged in to session
             req.session.user = username;
             req.session.authenticated = true;

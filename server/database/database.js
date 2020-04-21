@@ -1,4 +1,18 @@
-//TODO init connection
+const mysql = require('mysql');
+const bcrypt = require('bcrypt');
+
+const con = mysql.createConnection({
+    host: "cis550proj.cimxsfsxttk4.us-east-1.rds.amazonaws.com",
+    user: "admin",
+    password: "penn1741",
+    port: 1521,
+    database: 'cis550proj'
+});
+
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected to DB!");
+});
 
 /*
  * Function to check login credentials
@@ -9,33 +23,27 @@ var myDB_validateLogin = function(username, password, route_callbck){
         route_callbck(null, "Please fill in username & password!");
     }
 
-    //TODO remove this dummy line with a query to the database
-    route_callbck({username: username}, null);
-
-    // user_kvs.get(username, function (err, data) {
-    //       if (err) {
-    //           //user login error
-    //           route_callbck(null, "Database lookup error: "+err);
-    //       } else if (data == null) {
-    //           //user login no data
-    //           route_callbck(null, "This user does not exist!");
-    //       } else {
-    //           //user login exists
-    //           //now check password is correct
-    //           var dbUserData = JSON.parse(data[0]['value']);
-    //           var dbPass = dbUserData['password'];
-
-    //           bcrypt.compare(password, dbPass, function(err, res) {
-    //             if(res) {
-    //              // Passwords match
-    //              route_callbck({ userInfo : data}, null);
-    //             } else {
-    //              // Passwords don't match
-    //              route_callbck(null, "Incorrect password!");
-    //             }
-    //           });
-    //       }
-    // });
+    //query db for user
+    con.query(`SELECT password FROM Users WHERE name = ?;`, [username],  function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result && Array.isArray(result) && result.length < 1){
+            route_callbck(null, "This user does not exist!");
+        }
+        else {
+            bcrypt.compare(password, result[0].password, function(err, res) {
+                if(res) {
+                 // Passwords match
+                 route_callbck({ username : username}, null);
+                } else {
+                 // Passwords don't match
+                 route_callbck(null, "Incorrect password!");
+                } 
+            });
+        }
+    });
 };
 
 /*
@@ -47,23 +55,31 @@ var myDB_createAccount = function(username, password, name, route_callbck){
         route_callbck(null, "Please fill in all fields!");
     }
 
-    //TODO remove this dummy line with a query to the database
-    route_callbck(null, "Signup backend not yet implemented!");
-
-    // user_kvs.exists(username, function (err, data) {
-    //     if (err || data == null) {
-    //       //user signup error
-    //       route_callbck(null, "Database lookup error: "+err);
-    //     } else {
-    //       if(data){
-    //           route_callbck(null, "This user already exists!");
-    //       }else{
-    //           bcrypt.hash(password, 10, function(err, hash) {
-    //             //add user to table and return result        
-    //           });
-    //       }
-    //     }
-    // });
+    con.query(`SELECT password FROM Users WHERE name = ?;`, [username],  function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result && Array.isArray(result) && result.length < 1){
+            //user doens't already exist
+            bcrypt.hash(password, 10, function(err, hash) {
+                // Store user in database
+                let user = {name: username, password: hash}
+                con.query('INSERT INTO Users SET ?', user, function(err, result, fields) {
+                    if (err){
+                        route_callbck(null, "Database lookup error: "+err);
+                        throw (err);
+                    }
+                    if (result){
+                        route_callbck({ username : username}, null);
+                    } 
+                });
+            });
+        }
+        else {
+            route_callbck(null, "This user already exists!");
+        }
+    });
 };
 
 /*
