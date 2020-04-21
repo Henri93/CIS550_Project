@@ -59,6 +59,7 @@ html,body{
     font-size: 1.1em;
     cursor: grab;
     margin-right: 1.8vw;
+    
 
 }
 
@@ -68,6 +69,11 @@ html,body{
     font-size: 1.1em;
     cursor: grab;
 
+    
+}
+
+.profP:hover, .compP:hover{
+    color:orange;
 }
 
 .profPHigh {
@@ -97,11 +103,7 @@ html,body{
 
 }
 
-p:hover{
-    color:orange; 
 
-
-}
 
 .profileArea{
     width: 100%;

@@ -3,7 +3,7 @@
     padding: 60px 0;
     width: "100vw";
      height: "94vh";
-    background-image: linear-gradient(to bottom, #ffd6cc , white);
+    background-image: linear-gradient(to bottom, #ffc04c , white);
   }
 
   .h1-center{
@@ -16,8 +16,8 @@
   }
 
   .butStl{
-    background-color: #b50e14;
-    color: #b50e14;
+    background-color: orange;
+    color: orange;
   }
   .pStyle {
     text-align: center;
@@ -26,7 +26,7 @@
   }
 
   .aStl{
-    color: #b50e14;
+    color: orange;
   }
 
   .nicerLog {

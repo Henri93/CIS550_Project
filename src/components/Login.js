@@ -18,6 +18,10 @@ export default function Login() {
     <div className="Login">
       <div className="nicerLog">
         <h1 className="h1-center">Yelp</h1>
+        {/* <div class="diamond-shape">
+          <div class="item-count">99</div>
+        </div> */}
+
         <form onSubmit={handleSubmit} className="emailEr">
           <FormGroup className="topper" controlId="email" bsSize="large">
             <FormControl
@@ -37,7 +41,7 @@ export default function Login() {
             />
           </FormGroup>
 
-          <Button style={{ backgroundColor: "red", borderColor: "red" }} block type="submit">
+          <Button style={{ backgroundColor: "orange", borderColor: "orange" }} block type="submit">
             Login
         </Button>
 
