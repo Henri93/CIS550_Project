@@ -45,7 +45,8 @@ export default class Business extends React.Component {
                         name='rating'
                     />
                     <p className = "numberOfReviews">500 Reviews</p>
-                    <p className = "cats">Diners and Lunchers</p>
+                    <p className = "cats">A diner in Bellingham</p>
+                    {/* <p className = "cats">Bellingham</p> */}
                     <a href={"/review/" + this.state.businessName} type="button" class="reviewBut btn btn-outline-warning">Leave a review</a>
                     <hr className = "pageBreak"></hr>
                     <h2>Location</h2>

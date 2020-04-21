@@ -68,7 +68,7 @@ export default function Signup() {
               type="password"
             />
           </FormGroup>
-          <Button style={{ backgroundColor: "red", borderColor: "red" }} block type="submit">
+          <Button style={{ backgroundColor: "orange", borderColor: "orange" }} block type="submit">
             Login
         </Button>
 

@@ -3,11 +3,12 @@
     padding: 60px 0;
     width: "100vw";
      height: "94vh";
-    background-image: linear-gradient(to bottom, #ffd6cc , white);
+    background-image: linear-gradient(to bottom, #ffc04c  , white);
   }
 
   .h1-center{
     text-align: center;
+    margin-bottom: 1.1vw;
   }
 
   .Login form {
@@ -16,8 +17,8 @@
   }
 
   .butStl{
-    background-color: #b50e14;
-    color: #b50e14;
+    background-color: orange ;
+    color: orange ;
   }
   .pStyle {
     text-align: center;
@@ -26,7 +27,7 @@
   }
 
   .aStl{
-    color: #b50e14;
+    color: orange ;
   }
 
   .nicerLog {
@@ -40,6 +41,26 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-top: 30px;
 
+  }
+
+
+  
+
+  .diamond-shape {
+    background: orange
+      ;
+    height: 60px;
+    text-align: center;
+    transform:rotate(45deg);
+    width:60px;
+  }
+  .item-count {
+    color: #333;
+    display: table-cell;
+    height: 60px;
+    transform: rotate(-45deg);
+    vertical-align: middle;
+    width:60px;
   }
 
 
