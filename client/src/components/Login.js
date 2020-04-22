@@ -40,7 +40,7 @@ export default function Login() {
   return (
     <div className="Login">
       <div className="nicerLog">
-        <h1 className="h1-center">Yelp</h1>
+        <h1 className="h1-center">ꟻF</h1>
         {/* <div class="diamond-shape">
           <div class="item-count">99</div>
         </div> */}

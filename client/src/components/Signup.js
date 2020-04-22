@@ -41,7 +41,7 @@ export default function Signup() {
   return (
     <div className="Signup">
         <div className="nicerLog">
-        <h1 className="h1-center">Yelp</h1>
+        <h1 className="h1-center">ꟻF</h1>
         <form onSubmit={handleSubmit} className="emailEr">
           <FormGroup className="topper" controlId="email" bsSize="large">
             <FormControl

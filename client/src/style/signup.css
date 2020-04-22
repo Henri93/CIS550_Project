@@ -8,6 +8,13 @@
 
   .h1-center{
     text-align: center;
+   color:orange;
+   letter-spacing:-.9rem;
+   margin-top:-1.6rem;
+   margin-bottom:-1.3rem;
+   font-size:7rem;
+   margin-top: -2.3vw;
+    margin-bottom: 0.4vw;
   }
 
   .Login form {

@@ -41,7 +41,7 @@ export default class PageNavbar extends React.Component {
 			<div className="PageNavbar" >
 				<nav className="navbar navbar-expand-lg navbar-light bg-light">	
 
-			      <span style = {{"color":"#ff4a4a"}} className="navbar-brand center">Yelp</span>
+			      <span style = {{"color":"orange", "letterSpacing":"-0.5rem","marginTop":"-1.6rem","marginBottom":"-1.3rem" ,"fontSize":"3.6rem"}} className="navbar-brand center">ꟻF</span>
 			      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
 			        <div  className="navbar-nav">
 			        {this.state.navDivs}
