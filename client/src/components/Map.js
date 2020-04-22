@@ -24,7 +24,7 @@ class MapCreator extends React.Component {
       this.updateBusinesses = this.updateBusinesses.bind(this);
       this.getBusinesses = this.getBusinesses.bind(this);
       this.state = {
-        businesses: [],
+        businesses: {},
         selectedPark: null
       };
     }
@@ -39,9 +39,19 @@ class MapCreator extends React.Component {
         .then(data => {
           if(data.success) {
             //successful
-            console.log(data.businesses)
+            
+            //convert array to object mapping to prevent duplicate markers
+            let businesses = data.businesses.reduce(function(result, item) {
+              var key = item["name"];
+              console.log(key)
+              result[key] = data.businesses.find(element => element.name === key);
+              return result;
+            }, {});
+             
+            console.log("Businesses" + JSON.stringify(businesses))
+
             this.setState({
-              businesses: data.businesses
+              businesses: businesses
             });
             
           }else{
@@ -61,6 +71,7 @@ class MapCreator extends React.Component {
       };
       window.addEventListener("keydown", listener);
 
+      //just random bounds for defaultCenter location
       this.getBusinesses(45.07448420198623, -77.008659375, 45.75410365243435, -74.371940625)
     }
 
@@ -68,7 +79,6 @@ class MapCreator extends React.Component {
       //only update businesses when scrolling on high zooms
       if(_map.getZoom() >= 10){
         let bounds = JSON.parse(JSON.stringify(_map.getBounds()))
-        console.log('update ' + JSON.stringify(bounds))
         this.getBusinesses(bounds.north, bounds.west, bounds.south, bounds.east)
       }
     }
@@ -84,24 +94,24 @@ class MapCreator extends React.Component {
         >
     
           { 
-          this.state.businesses.map(park => (
+          //Map each business to a marker
+          Object.entries(this.state.businesses).map(([key, value]) => 
             <Marker
-              key={park.business_id}
+              key={key}
               position={{
-                lat: park.longitude,
-                lng: park.latitude
+                lat: value.latitude,
+                lng: value.longitude
               }}
               onClick={() => {
                 this.setState({
-                  selectedPark: park
+                  selectedPark: value
                 });
               }}
               icon={{
-              
                 scaledSize: new window.google.maps.Size(25, 25)
               }}
             />
-          ))
+          )
           }
     
           {this.state.selectedPark && (
@@ -112,8 +122,8 @@ class MapCreator extends React.Component {
                 });
               }}
               position={{
-                lat: this.state.selectedPark.longitude,
-                lng: this.state.selectedPark.latitude
+                lat: this.state.selectedPark.latitude,
+                lng: this.state.selectedPark.longitude
               }}
               style = {{backgroundColor: "red"}}
             >

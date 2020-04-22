@@ -98,7 +98,7 @@ var myDB_getBusinessForArea = function(area, route_callbck){
     let maxLng = Math.max(area.lng1, area.lng2)
 
     //query db for business with location inside bounds
-    con.query(`SELECT * FROM Business b WHERE b.longitude BETWEEN `+minLat+ `and `+maxLat+` AND b.latitude BETWEEN `+minLng+` and `+maxLng+`;`,  function(err, result, fields) {
+    con.query(`SELECT * FROM Business b WHERE b.latitude BETWEEN `+minLat+ `and `+maxLat+` AND b.longitude BETWEEN `+minLng+` and `+maxLng+`;`,  function(err, result, fields) {
         if (err){
             route_callbck(null, "Database lookup error: "+err);
             throw (err);
