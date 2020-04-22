@@ -65,14 +65,14 @@ function MapCreator() {
             lat: selectedPark.geometry.coordinates[1],
             lng: selectedPark.geometry.coordinates[0]
           }}
-          style = {{backgroundColor: "red"}}
+          style = {{backgroundColor: "orange"}}
         >
           <div style={{"textAlign" : "center"}}> 
             <a className = "businessLink" href = {"/business/" + selectedPark.properties.NAME}>{selectedPark.properties.NAME}</a>
             <br></br>
             <StarRatings
               rating={2.43}
-              starRatedColor="red"
+              starRatedColor="orange"
               numberOfStars={5}
               starDimension="25px"
               starSpacing="2px"
