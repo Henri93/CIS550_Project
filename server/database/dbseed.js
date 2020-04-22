@@ -1,0 +1,23 @@
+//Sanity check for ensuring that we can connect to the database
+const mysql = require('mysql');
+
+const con = mysql.createConnection({
+    host: "cis550proj.cimxsfsxttk4.us-east-1.rds.amazonaws.com",
+    user: "admin",
+    password: "penn1741",
+    port: 1521,
+    database: 'cis550proj'
+});
+
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+
+    // let b = {business_id: "1", name: "Bob MacQuarrie Skateboard Park (SK8 Extreme Park)", neighborhood: "Planchodrome Bearbrook", address: "1490 Youville Drive", city: "", state: "", postal_code: "", latitude: 45.467134581917357, longitude: -75.546518086577947, stars: 4.2, review_count: 0, is_open: 1, categories: "Skate Park"}
+
+    con.query('SELECT * FROM Business',  function(err, result, fields) {
+        if (err) throw (err);
+        if (result) console.log(result);
+    });
+    con.end();
+});
