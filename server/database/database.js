@@ -87,12 +87,27 @@ var myDB_createAccount = function(username, password, name, route_callbck){
  * @Return list of business objects
  */
 var myDB_getBusinessForArea = function(area, route_callbck){
-    //TODO add query that returns businesses
     
-    //dummy return of businesses
-    route_callbck([
-        
-    ], null);
+    if(area.lat1 === "" || area.lng1 === "" || area.lat2 === "" || area.lng2 === ""){
+        route_callbck(null, "Please fill in area!");
+    }
+
+    let minLat = Math.min(area.lat1, area.lat2)
+    let maxLat = Math.max(area.lat1, area.lat2)
+    let minLng = Math.min(area.lng1, area.lng2)
+    let maxLng = Math.max(area.lng1, area.lng2)
+
+    //query db for business with location inside bounds
+    con.query(`SELECT * FROM Business b WHERE b.longitude BETWEEN `+minLat+ `and `+maxLat+` AND b.latitude BETWEEN `+minLng+` and `+maxLng+`;`,  function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result && Array.isArray(result) && result.length > 0){
+            //return list
+            route_callbck(result, null);
+        }
+    });
 }
 
 var database = {

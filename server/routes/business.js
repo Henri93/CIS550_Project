@@ -5,9 +5,13 @@ var express = require('express')
  * Route for returning businesses for homepage
  */
 let getHomeBusinesses = function(req, res, next) {
-    var area = req.body.area;
+    var lat1 = req.query.lat1;
+    var lng1 = req.query.lng1;
 
-    db.getBusinessForArea(area, function(data, err) {
+    var lat2 = req.query.lat2;
+    var lng2 = req.query.lng2;
+
+    db.getBusinessForArea({lat1: lat1, lng1: lng1, lat2: lat2, lng2: lng2}, function(data, err) {
         if(data == null && err != null){
             //error getting businesses of area
             res.json({success: false, err: err});
