@@ -14,7 +14,8 @@ export default class Profile extends React.Component {
         this.state = {
             username: "",
             onProfile: true,
-            names: ["Hot", "Funny", "Profile", "Cute", "Writer"]
+            names: ["Hot", "Funny", "Profile", "Cute", "Writer"],
+            friends: ["Mike", "Sat", "Hort"]
         };
 
 
@@ -79,7 +80,20 @@ export default class Profile extends React.Component {
                     </div>
 
                     <div className={this.state.onProfile ? 'hidden' : 'compArea'}>
+                        
+                    <div class="container">
+                            <div class="row">
 
+                                {this.state.friends.map(name => (
+                                    <div class="col-sm-3">
+                                        <span class="nameSpanProfile2">{name.toUpperCase()[0]}</span>
+                                        <p className="sideText">{name}</p>
+                                    </div>
+                                ))}
+
+
+                            </div>
+                        </div>
                     </div>
 
                 </div>

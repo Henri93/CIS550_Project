@@ -125,14 +125,14 @@ class MapCreator extends React.Component {
                 lat: this.state.selectedPark.latitude,
                 lng: this.state.selectedPark.longitude
               }}
-              style = {{backgroundColor: "red"}}
+              style = {{backgroundColor: "orange"}}
             >
               <div style={{"textAlign" : "center"}}> 
                 <a className = "businessLink" href = {"/business/" + this.state.selectedPark.name}>{this.state.selectedPark.name}</a>
                 <br></br>
                 <StarRatings
                   rating={this.state.selectedPark.stars}
-                  starRatedColor="red"
+                  starRatedColor="orange"
                   numberOfStars={5}
                   starDimension="25px"
                   starSpacing="2px"
@@ -156,12 +156,14 @@ export default function Map() {
     <div style={{ width: "100vw", height: "94vh" }}>
           <PageNavbar hide_search={false} active="Map" />
 
-      { <MapWrapped
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAi8On2sh9wpXhquXfaDcdpMl_JmDbhBO0`}
+      {/* <MapWrapped
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${
+          process.env.REACT_APP_GOOGLE_KEY
+        }`}
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100%` }} />}
         mapElement={<div style={{ height: `100%` }} />}
-      /> }
+      /> */}
     </div>
   );
 }

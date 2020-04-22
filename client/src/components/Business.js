@@ -38,7 +38,7 @@ export default class Business extends React.Component {
                     <h1 className="bizTitle"> {this.state.businessName}</h1>
                     <StarRatings
                         rating={2.43}
-                        starRatedColor="red"
+                        starRatedColor="orange"
                         numberOfStars={5}
                         starDimension="25px"
                         starSpacing="2px"

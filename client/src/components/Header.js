@@ -49,7 +49,7 @@ export default class PageNavbar extends React.Component {
 					{this.state.hide_map &&
 						<form className="form-inline md-form mr-auto" style = {{"margin":"auto"}}>
 							<input style = {{"width":"20vw"}} className = "form-control mr-sm-2" type="text" placeholder="Enter a restaurant, store, etc" aria-label="Search"/>							
-							<a href = "/" type = "submit" style = {{"color":"red", fontSize:"1.35em"}}id = "errSpan"><FontAwesomeIcon  icon={faSearch}></FontAwesomeIcon></a>
+							<a href = "/" type = "submit" style = {{"color":"orange", fontSize:"1.35em"}}id = "errSpan"><FontAwesomeIcon  icon={faSearch}></FontAwesomeIcon></a>
 						
 						</form>
 					}
