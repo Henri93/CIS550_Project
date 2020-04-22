@@ -48,7 +48,7 @@ export default class Reccomendations extends React.Component {
                                         </div>
                                         <div class="card-body">
                                             <p class="card-text">{profile}</p>
-                                            <button type="button" class="btn btn-warning">Go to</button>
+                                            <button style={{"backgroundColor":"orange", "color":"white"}}type="button" class="btn btn-warning">Go to</button>
                                         </div>
                                     </div>
                                 </div>

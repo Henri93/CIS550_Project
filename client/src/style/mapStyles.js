@@ -31,7 +31,7 @@ export default [
     elementType: "geometry",
     stylers: [
       {
-        color: "#ff4a4a"
+        color: "#ffa500"
       },
       {
         lightness: 10
@@ -44,10 +44,10 @@ export default [
     elementType: "geometry",
     stylers: [
       {
-        color: "#ff4a4a"
+        color: "#ffa500"
       },
       {
-        lightness: -20
+        lightness: 35
       }
     ]
   },
@@ -56,10 +56,10 @@ export default [
     elementType: "geometry",
     stylers: [
       {
-        color: "#ff4a4a"
+        color: "#ffa500"
       },
       {
-        lightness: -17
+        lightness: 50
       }
     ]
   },
@@ -67,13 +67,14 @@ export default [
     elementType: "labels.text.stroke",
     stylers: [
       {
-        color: "#ffffff"
+        color: "black"
       },
       {
         visibility: "on"
       },
+      
       {
-        weight: 0.9
+        weight: 7
       }
     ]
   },
@@ -84,7 +85,7 @@ export default [
         visibility: "on"
       },
       {
-        color: "#ffffff"
+        color: "black"
       }
     ]
   },
