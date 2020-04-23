@@ -103,8 +103,10 @@ class MapCreator extends React.Component {
                 lng: value.longitude
               }}
               onClick={() => {
+                var cats = value.categories.replace(";",", ")
                 this.setState({
-                  selectedPark: value
+                  selectedPark: value,
+                  cats:cats
                 });
               }}
               icon={{
@@ -141,7 +143,7 @@ class MapCreator extends React.Component {
               <p style={{"display":"inline", "marginTop":"1rem","marginLeft":"1rem","verticalAlign":"top", "fontSize":"1.5rem"}}>{this.state.selectedPark.review_count}</p>
               <br></br>
               {/* <p>{this.state.selectedPark.neighborhood}</p> */}
-              <p style={{"marginTop":"0.3rem"}}>{this.state.selectedPark.categories}</p>
+              <p style={{"color":"#758a8a","marginTop":"0.3rem"}}>{this.state.cats}</p>
 
               {/* <p>   name, categories, review_count, stars</p> */}
 
