@@ -39,16 +39,15 @@ class MapCreator extends React.Component {
         .then(data => {
           if(data.success) {
             //successful
-            
+            console.log("Number of Businesses returned: " + data.businesses.length)
             //convert array to object mapping to prevent duplicate markers
             let businesses = data.businesses.reduce(function(result, item) {
               var key = item["name"];
-              console.log(key)
               result[key] = data.businesses.find(element => element.name === key);
               return result;
             }, {});
              
-            console.log("Businesses" + JSON.stringify(businesses))
+            // console.log("Businesses" + JSON.stringify(businesses))
 
             this.setState({
               businesses: businesses
@@ -128,7 +127,7 @@ class MapCreator extends React.Component {
               style = {{backgroundColor: "orange"}}
             >
               <div style={{"textAlign" : "center"}}> 
-                <a className = "businessLink" href = {"/business/" + this.state.selectedPark.name}>{this.state.selectedPark.name}</a>
+                <a className = "businessLink" href = {"/business/" + this.state.selectedPark.business_id}>{this.state.selectedPark.name}</a>
                 <br></br>
                 <StarRatings
                   rating={this.state.selectedPark.stars}
