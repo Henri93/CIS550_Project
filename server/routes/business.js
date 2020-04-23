@@ -25,6 +25,44 @@ let getHomeBusinesses = function(req, res, next) {
       });
 }
 
+/*
+ * Route for returning business' info
+ */
+let getBusinessInfo = function(req, res, next) {
+    var id = req.query.id;
+    
+    db.getBusinessInfo({id: id}, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else{
+            res.json({success: true, business: data});
+        }
+      });
+}
+
+/*
+ * Route for returning reviews for business
+ */
+let getReviewsForBusiness = function(req, res, next) {
+    var id = req.query.id;
+    
+    db.getReviewsForBusiness({id: id}, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else if(data.length > 0){
+            //serve reviews to front-end to set state
+            res.json({success: true, reviews: data});
+        }else{
+            //no reviews for business...might want to send a special message
+            res.json({success: true, reviews: []});
+        }
+      });
+}
+
 module.exports = { 
-    getHomeBusinesses: getHomeBusinesses
+    getHomeBusinesses: getHomeBusinesses,
+    getBusinessInfo: getBusinessInfo,
+    getReviewsForBusiness, getReviewsForBusiness
 }

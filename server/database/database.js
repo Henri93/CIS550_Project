@@ -98,7 +98,7 @@ var myDB_getBusinessForArea = function(area, route_callbck){
     let maxLng = Math.max(area.lng1, area.lng2)
 
     //query db for business with location inside bounds
-    con.query(`SELECT * FROM Business b WHERE b.latitude BETWEEN `+minLat+ `and `+maxLat+` AND b.longitude BETWEEN `+minLng+` and `+maxLng+`;`,  function(err, result, fields) {
+    con.query(`SELECT * FROM Business b WHERE b.latitude BETWEEN `+minLat+ `and `+maxLat+` AND b.longitude BETWEEN `+minLng+` and `+maxLng+` LIMIT 10;`,  function(err, result, fields) {
         if (err){
             route_callbck(null, "Database lookup error: "+err);
             throw (err);
@@ -110,10 +110,58 @@ var myDB_getBusinessForArea = function(area, route_callbck){
     });
 }
 
+/*
+ * Function to get business info
+ * @Return business 
+ */
+var myDB_getBusinessInfo = function(id, route_callbck){
+    
+    if(id.id === ""){
+        route_callbck(null, "No id provided!");
+    }
+
+    //query db
+    con.query(`SELECT * FROM Business b WHERE b.business_id="`+id.id+`";`,  function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result && Array.isArray(result) && result.length > 0){
+            //return first in list
+            route_callbck(result[0], null);
+        }
+    });
+}
+
+/*
+ * Function to get reviews for a business
+ * @Return list of review objects
+ */
+var myDB_getReviewsForBusiness = function(id, route_callbck){
+    
+    if(id.id === ""){
+        route_callbck(null, "Please provide a business id!");
+    }
+
+    //query db for reviews
+    con.query(`SELECT * FROM Reviews r WHERE r.business_id="`+id.id+`";`,  function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result){
+            //return list
+            route_callbck(result, null);
+        }
+    });
+}
+
 var database = {
     validateLogin: myDB_validateLogin,
     createAccount: myDB_createAccount,
-    getBusinessForArea: myDB_getBusinessForArea
+    getBusinessForArea: myDB_getBusinessForArea,
+    getBusinessInfo: myDB_getBusinessInfo,
+    getReviewsForBusiness: myDB_getReviewsForBusiness
   };
   
   module.exports = database;
