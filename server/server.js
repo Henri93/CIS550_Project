@@ -31,6 +31,8 @@ app.use('/signup', user.signup);
 
 /* Routes involving Businesses */
 app.get('/getHomeBusinesses', business.getHomeBusinesses);
+app.get('/getBusinessesInfo', business.getBusinessInfo);
+app.get('/getReviews', business.getReviewsForBusiness);
 
 app.get('/api', (req,res) => {
   //dummy route to test serving data to frontend
