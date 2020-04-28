@@ -30,7 +30,7 @@ export default class Reccomendations extends React.Component {
         return (
             <div>
                 <div >
-                    <PageNavbar active="Reccomendations" />
+                    <PageNavbar active="Reccomendations" loggedInUser={this.props.loggedInUser} />
                 </div>
                 <div className="topPic">
                 </div>

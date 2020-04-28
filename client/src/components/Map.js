@@ -8,8 +8,8 @@ import {
 import mapStyles from "../style/mapStyles";
 
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import "../style/markerWindowStyles.css"
-
 import PageNavbar from './Header';
 import StarRatings from 'react-star-ratings';
 
@@ -157,17 +157,17 @@ class MapCreator extends React.Component {
 
 const MapWrapped = withScriptjs(withGoogleMap(MapCreator));
 
-export default function Map() {
+export default function Map(props) {
   return (
     <div style={{ width: "100vw", height: "94vh" }}>
-      <PageNavbar hide_search={false} active="Map" />
+          <PageNavbar hide_search={false} active="Map" loggedInUser={props.loggedInUser} />
 
-      <MapWrapped
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAXNiAH94EQfPSSHUJRZoPJ5h9bmBx0gp8`}
+      { /* <MapWrapped
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAi8On2sh9wpXhquXfaDcdpMl_JmDbhBO0`}
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100%` }} />}
         mapElement={<div style={{ height: `100%` }} />}
-      />
+      /> */ }
     </div>
   );
 }

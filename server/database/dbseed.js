@@ -14,8 +14,13 @@ con.connect(function(err) {
     console.log("Connected!");
 
     // let b = {business_id: "1", name: "Bob MacQuarrie Skateboard Park (SK8 Extreme Park)", neighborhood: "Planchodrome Bearbrook", address: "1490 Youville Drive", city: "", state: "", postal_code: "", latitude: 45.467134581917357, longitude: -75.546518086577947, stars: 4.2, review_count: 0, is_open: 1, categories: "Skate Park"}
+    let q = 'SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = \'Users\' AND COLUMN_NAME = \'user_id\''
+    let q2 = 'SELECT * FROM Users WHERE name=\'test@test.com\''
+    let q3 = 'DELETE FROM Users WHERE name=\'test@test.com\''
+    let q4 = 'ALTER TABLE Users MODIFY COLUMN password VARCHAR(64)'
+    let q5 = 'ALTER TABLE Users MODIFY COLUMN user_id VARCHAR(255) UNIQUE'
 
-    con.query('SELECT * FROM Business',  function(err, result, fields) {
+    con.query(q2,  function(err, result, fields) {
         if (err) throw (err);
         if (result) console.log(result);
     });

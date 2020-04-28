@@ -16,7 +16,7 @@ export default class PageNavbar extends React.Component {
 
 	componentDidMount() {
 		const pageList = ['Map', 'My Profile', 'Reccomendations'];
-		const username = "jacob platin";
+		const username = this.props.loggedInUser.username;
 		let hrefs = ['', 'profile/' + username,'reccomendations/' + username];
 		let navbarDivs = pageList.map((page, i) => {
 
@@ -66,11 +66,11 @@ export default class PageNavbar extends React.Component {
       <li className="nav-item dropdown">
         <a style = {{"cursor":"grab"}} className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <i  className="fas fa-user"></i> Jacob's Profile </a>
+          <i  className="fas fa-user"></i> {this.props.loggedInUser.username} Profile </a>
         <div className="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-          <a className="dropdown-item" href="/profile/jacob platin">My account</a>
-		  <a className="dropdown-item" href="/reccomendations/jacob platin">Reccomendations</a>
-          <a className="dropdown-item" href="/login">Log out</a>
+          <a className="dropdown-item" href={'/profile/' + this.props.loggedInUser.username}>My account</a>
+		  <a className="dropdown-item" href={'/reccomendations/' + this.props.loggedInUser.username}>Reccomendations</a>
+          <a className="dropdown-item" href="/logout">Log out</a>
         </div>
       </li>
     </ul>

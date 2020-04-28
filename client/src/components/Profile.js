@@ -39,7 +39,7 @@ export default class Profile extends React.Component {
         return (
             <div>
                 <div>
-                    <PageNavbar active="My Profile" />
+                    <PageNavbar active="My Profile" loggedInUser={this.props.loggedInUser} />
                 </div>
                 <div className="topPic">
                 </div>

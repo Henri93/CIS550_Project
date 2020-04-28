@@ -24,7 +24,7 @@ var myDB_validateLogin = function(username, password, route_callbck){
     }
 
     //query db for user
-    con.query(`SELECT password FROM Users WHERE name = ?;`, [username],  function(err, result, fields) {
+    con.query(`SELECT user_id, password FROM Users WHERE name = ?;`, [username],  function(err, result, fields) {
         if (err){
             route_callbck(null, "Database lookup error: "+err);
             throw (err);
@@ -36,7 +36,7 @@ var myDB_validateLogin = function(username, password, route_callbck){
             bcrypt.compare(password, result[0].password, function(err, res) {
                 if(res) {
                  // Passwords match
-                 route_callbck({ username : username}, null);
+                 route_callbck({ username : username, user_id : result[0].user_id}, null);
                 } else {
                  // Passwords don't match
                  route_callbck(null, "Incorrect password!");
@@ -64,14 +64,16 @@ var myDB_createAccount = function(username, password, name, route_callbck){
             //user doens't already exist
             bcrypt.hash(password, 10, function(err, hash) {
                 // Store user in database
-                let user = {name: username, password: hash}
+                //TODO the user_id should be something unquie to each person like an email
+                let user = {name: username, user_id: username, password: hash}
+                console.log("passwrd: " + hash)
                 con.query('INSERT INTO Users SET ?', user, function(err, result, fields) {
                     if (err){
                         route_callbck(null, "Database lookup error: "+err);
                         throw (err);
                     }
                     if (result){
-                        route_callbck({ username : username}, null);
+                        route_callbck({ username : username, user_id : username}, null);
                     } 
                 });
             });

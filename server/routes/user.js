@@ -30,9 +30,23 @@ let login = function(req, res, next) {
             req.session.authenticated = true;
 
             //return success
-            res.json({success: true, res: data['username']});
+            res.json({success: true, res: data});
         }
     });
+}
+
+/*
+ * Route for checking login credentials in session obejct
+ */
+let isLoggedIn = function(req, res, next) {
+    if(req.session.authenticated && req.session.user){
+        let user = {username: req.session.user}
+        console.log("User is authenticated")
+        res.json({success: true, res: user});
+    }else{
+        console.log("User is NOT authenticated")
+        res.json({success: false, res: "Not logged in session!"});
+    }
 }
 
 /*
@@ -53,13 +67,14 @@ let signup = function(req, res, next) {
             req.session.authenticated = true;
             
             //return success
-            res.json({success: true, res: data['username']});
+            res.json({success: true, res: data});
 		}
   	});
 };
 
 module.exports = { 
     login:login,
+    isLoggedIn:isLoggedIn,
     signup: signup,
     isAuthenticated:isAuthenticated
 }
