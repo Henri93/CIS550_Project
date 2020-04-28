@@ -1,17 +1,16 @@
 import React, { useContext } from "react";
 import { Route, Redirect } from 'react-router-dom';
-import { SessionContext } from "./session";
+import cookie from 'react-cookies'
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const session = useContext(SessionContext);
-  
-  console.log(session)
+
   return (
     <Route {...rest} render={
       props => {
-        console.log("Protected Route " + JSON.stringify(session.user))
-        if (session.user !== undefined) {
-          return <Component loggedInUser={session.user} {...rest} {...props} />
+        let loggedInUser = cookie.load('user')
+        console.log("Protected Route " + JSON.stringify(loggedInUser))
+        if (loggedInUser !== undefined) {
+          return <Component loggedInUser={loggedInUser} {...rest} {...props} />
         } else {
           return <Redirect to={
             {

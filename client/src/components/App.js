@@ -15,40 +15,6 @@ import ProtectedRoute from './ProtectedRoute';
 import Reccomendations from './Reccomendations';
 import { SessionContext, getSessionCookie, setSessionCookie } from "./session";
 
-const Routes = () => {
-	const [session, setSession] = useState(getSessionCookie());
-  
-	return (
-	  <SessionContext.Provider value={session}>
-		<Router>
-			<Switch>
-				<Route
-					path="/login"
-					render={() => (
-						<Login />
-					)}
-				/>
-
-				<Route
-					path="/signup"
-					render={() => (
-						<Signup />
-					)}
-				/>
-
-				<ProtectedRoute exact path='/' component={Map} />
-				<ProtectedRoute exact path='/profile/:name' component={Profile} />
-				<ProtectedRoute exact path='/business/:businessname' component={Business} />
-				<ProtectedRoute exact path='/review/:businessname' component={Review} />
-				<ProtectedRoute exact path='/reccomendations/:name' component={Reccomendations } />
-				<ProtectedRoute exact path='*' component={Map} />
-
-			</Switch>
-		</Router>
-	  </SessionContext.Provider>
-	);
-  };
-
 export default class App extends React.Component {
 
 	constructor(props) {
@@ -58,7 +24,31 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-				<Routes />
+				<Router>
+					<Switch>
+						<Route
+							path="/login"
+							render={() => (
+								<Login />
+							)}
+						/>
+
+						<Route
+							path="/signup"
+							render={() => (
+								<Signup />
+							)}
+						/>
+
+						<ProtectedRoute exact path='/' component={Map} />
+						<ProtectedRoute exact path='/profile/:name' component={Profile} />
+						<ProtectedRoute exact path='/business/:businessname' component={Business} />
+						<ProtectedRoute exact path='/review/:businessname' component={Review} />
+						<ProtectedRoute exact path='/reccomendations/:name' component={Reccomendations } />
+						<ProtectedRoute exact path='*' component={Map} />
+
+					</Switch>
+				</Router>
 			</div>
 		);
 	}

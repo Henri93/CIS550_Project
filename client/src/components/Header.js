@@ -1,18 +1,26 @@
 import React from 'react';
+import cookie from 'react-cookies'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
 import "../style/header.css"
+
 
 export default class PageNavbar extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.handleLogout = this.handleLogout.bind(this);
 		this.state = {
 			navDivs: []
 		}
 	}
+
+	handleLogout(event) {
+		console.log("Handle logout")
+		cookie.remove('user', { path: '/' })
+	}
+	
 
 	componentDidMount() {
 		const pageList = ['Map', 'My Profile', 'Reccomendations'];
@@ -70,7 +78,7 @@ export default class PageNavbar extends React.Component {
         <div className="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
           <a className="dropdown-item" href={'/profile/' + this.props.loggedInUser.username}>My account</a>
 		  <a className="dropdown-item" href={'/reccomendations/' + this.props.loggedInUser.username}>Reccomendations</a>
-          <a className="dropdown-item" href="/logout">Log out</a>
+          <a className="dropdown-item" onClick={this.handleLogout} href="/login">Log out</a>
         </div>
       </li>
     </ul>
