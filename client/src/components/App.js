@@ -15,6 +15,12 @@ import Reccomendations from './Reccomendations';
 
 export default class App extends React.Component {
 
+	state = { loggedInUser: {} }
+
+    handleLogin = (user) => {
+        this.setState({loggedInUser: user.res});
+    }
+
 	render() {
 		return (
 			<div className="App">
@@ -24,7 +30,7 @@ export default class App extends React.Component {
 							exact
 							path="/"
 							render={() => (
-								<Map />
+								<Map loggedInUser={this.state.loggedInUser}/>
 							)}
 						/>
 						<Route
@@ -37,13 +43,13 @@ export default class App extends React.Component {
 						<Route
 								path="/login"
 								render={() => (
-									<Login />
+									<Login onLogin={this.handleLogin}/>
 								)}
 							/>
 							<Route
 								path="/signup"
 								render={() => (
-									<Signup />
+									<Signup onLogin={this.handleLogin}/>
 								)}
 							/>
 							<Route

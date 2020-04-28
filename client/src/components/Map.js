@@ -150,10 +150,10 @@ class MapCreator extends React.Component {
 
 const MapWrapped = withScriptjs(withGoogleMap(MapCreator));
 
-export default function Map() {
+export default function Map(props) {
   return (
     <div style={{ width: "100vw", height: "94vh" }}>
-          <PageNavbar hide_search={false} active="Map" />
+          <PageNavbar hide_search={false} active="Map" loggedInUser={props.loggedInUser} />
 
       { /* <MapWrapped
         googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAi8On2sh9wpXhquXfaDcdpMl_JmDbhBO0`}

@@ -26,6 +26,7 @@ export default function Signup() {
         console.log(data)
         if(data.success) {
           //successful signup so redirect to homepage
+          props.onLogin(data); 
           history.push("/");
         }else{
           //display error signup msg

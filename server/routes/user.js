@@ -30,7 +30,7 @@ let login = function(req, res, next) {
             req.session.authenticated = true;
 
             //return success
-            res.json({success: true, res: data['username']});
+            res.json({success: true, res: data});
         }
     });
 }
@@ -53,7 +53,7 @@ let signup = function(req, res, next) {
             req.session.authenticated = true;
             
             //return success
-            res.json({success: true, res: data['username']});
+            res.json({success: true, res: data});
 		}
   	});
 };
