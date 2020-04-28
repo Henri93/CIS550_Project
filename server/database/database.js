@@ -85,6 +85,31 @@ var myDB_createAccount = function(username, password, name, route_callbck){
 };
 
 /*
+ * Function to get profile info
+ * @Return user 
+ */
+var myDB_getProfileInfo = function(id, route_callbck){
+    
+    if(id.id === ""){
+        route_callbck(null, "No id provided!");
+    }
+
+    //query db
+    con.query(`SELECT * FROM Users u WHERE u.name="`+id.id+`";`,  function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result && Array.isArray(result) && result.length > 0){
+            //return first in list
+            route_callbck(result[0], null);
+        }else{
+            route_callbck(null, "User profile not found");
+        }
+    });
+}
+
+/*
  * Function to get businesses to display on map for an area
  * @Return list of business objects
  */
@@ -161,6 +186,7 @@ var myDB_getReviewsForBusiness = function(id, route_callbck){
 var database = {
     validateLogin: myDB_validateLogin,
     createAccount: myDB_createAccount,
+    getProfileInfo: myDB_getProfileInfo,
     getBusinessForArea: myDB_getBusinessForArea,
     getBusinessInfo: myDB_getBusinessInfo,
     getReviewsForBusiness: myDB_getReviewsForBusiness

@@ -36,17 +36,19 @@ let login = function(req, res, next) {
 }
 
 /*
- * Route for checking login credentials in session obejct
+ * Route for getting a profile by user_id
  */
-let isLoggedIn = function(req, res, next) {
-    if(req.session.authenticated && req.session.user){
-        let user = {username: req.session.user}
-        console.log("User is authenticated")
-        res.json({success: true, res: user});
-    }else{
-        console.log("User is NOT authenticated")
-        res.json({success: false, res: "Not logged in session!"});
-    }
+let getProfile = function(req, res, next) {
+    var id = req.query.id;
+    
+    db.getProfileInfo({id: id}, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else{
+            res.json({success: true, profile: data});
+        }
+      });
 }
 
 /*
@@ -73,8 +75,8 @@ let signup = function(req, res, next) {
 };
 
 module.exports = { 
-    login:login,
-    isLoggedIn:isLoggedIn,
+    login: login,
+    getProfile: getProfile,
     signup: signup,
     isAuthenticated:isAuthenticated
 }
