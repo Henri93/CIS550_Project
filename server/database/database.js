@@ -39,7 +39,7 @@ var myDB_validateLogin = function(username, password, route_callbck){
                  route_callbck({ username : username}, null);
                 } else {
                  // Passwords don't match
-                 route_callbck(null, "Incorrect password!");
+                 route_callbck(null, "Incorrect password!: " + result[0].password);
                 } 
             });
         }
@@ -64,7 +64,9 @@ var myDB_createAccount = function(username, password, name, route_callbck){
             //user doens't already exist
             bcrypt.hash(password, 10, function(err, hash) {
                 // Store user in database
-                let user = {name: username, password: hash}
+                //TODO the user_id should be something unquie to each person like an email
+                let user = {name: username, user_id: username, password: hash}
+                console.log("passwrd: " + hash)
                 con.query('INSERT INTO Users SET ?', user, function(err, result, fields) {
                     if (err){
                         route_callbck(null, "Database lookup error: "+err);
@@ -98,7 +100,7 @@ var myDB_getBusinessForArea = function(area, route_callbck){
     let maxLng = Math.max(area.lng1, area.lng2)
 
     //query db for business with location inside bounds
-    con.query(`SELECT * FROM Business b WHERE b.latitude BETWEEN `+minLat+ `and `+maxLat+` AND b.longitude BETWEEN `+minLng+` and `+maxLng+`;`,  function(err, result, fields) {
+    con.query(`SELECT * FROM Business b WHERE b.latitude BETWEEN `+minLat+ `and `+maxLat+` AND b.longitude BETWEEN `+minLng+` and `+maxLng+` LIMIT 10;`,  function(err, result, fields) {
         if (err){
             route_callbck(null, "Database lookup error: "+err);
             throw (err);
