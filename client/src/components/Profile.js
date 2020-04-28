@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faAlignLeft } from '@fortawesome/free-solid-svg-icons';
 
 
-
 export default class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +13,8 @@ export default class Profile extends React.Component {
         this.state = {
             username: "",
             onProfile: true,
-            names: ["Hot", "Funny", "Profile", "Cute", "Writer"],
+            userProfile: {},
+            names: ["compliment_cool", "compliment_funny", "compliment_hot", "compliment_cute", "compliment_writer"],
             friends: ["Mike", "Sat", "Hort"]
         };
 
@@ -28,13 +28,35 @@ export default class Profile extends React.Component {
     };
 
     componentDidMount() {
-
         this.initial = (this.props.location.pathname.split('/')[2]).toUpperCase()[0];
         this.username = (this.props.location.pathname.split('/')[2]);
 
         this.setState({ username: this.username });
         this.setState({ initial: this.initial });
+
+        //get profile informatons
+        fetch('/getProfile?id=' + this.username, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                //successful
+                console.log(data.profile)
+                this.setState({
+                    userProfile: data.profile
+                });
+            } else {
+                //display error msg
+                console.log("Fail to load profile!")
+            }
+        })
     }
+
+
     render() {
         return (
             <div>
@@ -50,9 +72,9 @@ export default class Profile extends React.Component {
 
                     <div >
                         <FontAwesomeIcon style={{ "marginTop": "1vw", "display": "inline-block", "fontWeight": "100", "fontSize": "1.5em", "color": "orange" }} icon={faClock}></FontAwesomeIcon>
-                        <p style={{ "display": "inline-block", "fontWeight": "100", "fontSize": "1.5em", "marginLeft": "0.3vw" }}> Yelping since: March 3, 2015</p>
+                        <p style={{ "display": "inline-block", "fontWeight": "100", "fontSize": "1.5em", "marginLeft": "0.3vw" }}> Yelping since: {this.state.userProfile.yelping_since !== null ? this.state.userProfile.yelping_since : "Jan 1, 2000"}</p>
                         <FontAwesomeIcon style={{ "display": "inline-block", "marginLeft": "2vw", "fontWeight": "100", "fontSize": "1.5em", "color": "orange" }} icon={faAlignLeft}></FontAwesomeIcon>
-                        <p style={{ "display": "inline-block", "fontWeight": "100", "fontSize": "1.5em", "marginLeft": "0.3vw" }}> Reviews Left: 500</p>
+                        <p style={{ "display": "inline-block", "fontWeight": "100", "fontSize": "1.5em", "marginLeft": "0.3vw" }}> Reviews Left: {this.state.userProfile.review_count !== null ? this.state.userProfile.review_count : 0}</p>
                     </div>
 
                     <p onClick={this.toggleVisibility} className={this.state.onProfile ? 'profPHigh' : 'profP'}>My Profile</p>
@@ -69,12 +91,10 @@ export default class Profile extends React.Component {
 
                                 {this.state.names.map(name => (
                                     <div class="col-sm-2">
-                                        <span class="nameSpanProfile">100</span>
+                                        <span class="nameSpanProfile">{this.state.userProfile[name] !== null ? this.state.userProfile[name] : 0 }</span>
                                         <p >{name}</p>
                                     </div>
                                 ))}
-
-
                             </div>
                         </div>
                     </div>
