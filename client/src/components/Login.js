@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { SessionContext, getSessionCookie, setSessionCookie } from "./session";
 import "../style/login.css"
 
 export default function Login(props) {
@@ -25,7 +26,7 @@ export default function Login(props) {
         console.log(data)
         if(data.success) {
           //successful login so redirect to homepage
-          props.onLogin(data); 
+          setSessionCookie({user: data.res});
           history.push("/");
         }else{
           //display error login msg

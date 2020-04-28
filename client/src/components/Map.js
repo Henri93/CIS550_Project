@@ -8,6 +8,7 @@ import {
   import mapStyles from "../style/mapStyles";
 
   import React, { useState, useEffect } from "react";
+  import { useHistory } from "react-router-dom";
   import "../style/markerWindowStyles.css"
 
   import PageNavbar from './Header';
