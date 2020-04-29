@@ -13,7 +13,6 @@ import Business from './Business';
 import Review from './Review';
 import ProtectedRoute from './ProtectedRoute';
 import Reccomendations from './Reccomendations';
-import { SessionContext, getSessionCookie, setSessionCookie } from "./session";
 
 export default class App extends React.Component {
 

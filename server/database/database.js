@@ -183,13 +183,41 @@ var myDB_getReviewsForBusiness = function(id, route_callbck){
     });
 }
 
+/*
+ * Function to submit reviews for a business
+ * @Return submitted review
+ */
+var myDB_submitReviewForBusiness = function(data, route_callbck){
+    
+    if(data.user_id === "" || data.business_id === "" || data.reviewText === ""){
+        route_callbck(null, "Please provide a enough info for a review!");
+    }
+
+    let date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    let review = {user_id: data.user_id, business_id: data.business_id, rating: data.rating, text: data.reviewText, date: date, useful: 0, funny: 0, cool: 0}
+    console.log("submitting review: " + JSON.stringify(review))
+    
+    //UNCOMMENT THIS WHEN REVIEWS TABLE EXISTS
+    route_callbck(null, "Reviews table is missing!");
+    // con.query('INSERT INTO Reviews SET ?', review, function(err, result, fields) {
+    //     if (err){
+    //         route_callbck(null, "Database lookup error: "+err);
+    //         throw (err);
+    //     }
+    //     if (result){
+    //         route_callbck({ rating : data.rating, reviewText : data.reviewText}, null);
+    //     } 
+    // });
+}
+
 var database = {
     validateLogin: myDB_validateLogin,
     createAccount: myDB_createAccount,
     getProfileInfo: myDB_getProfileInfo,
     getBusinessForArea: myDB_getBusinessForArea,
     getBusinessInfo: myDB_getBusinessInfo,
-    getReviewsForBusiness: myDB_getReviewsForBusiness
+    getReviewsForBusiness: myDB_getReviewsForBusiness,
+    submitReviewForBusiness: myDB_submitReviewForBusiness
   };
   
   module.exports = database;

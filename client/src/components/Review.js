@@ -8,21 +8,44 @@ import { Button, Modal } from 'react-bootstrap'
 export default class Review extends React.Component {
     constructor(props) {
         super(props);
+        this.changeRating = this.changeRating.bind(this);
+        this.changeReviewText = this.changeReviewText.bind(this);
 
         this.state = {
             businessName: "",
+            modalTitle: "Congratulations!",
+            modalText: "Your review has been submitted!",
             setIsOpen: false,
-            isOpen: false
+            isOpen: false,
+            business: {},
+            rating: 0,
+            reviewText: ""
         };
-
-
-
     }
 
 
     showModal = () => {
-        this.setState({ isOpen: true });
-
+        //submit the review and show the success modal
+        fetch('/submitReview', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+            },
+              body: JSON.stringify({ rating: this.state.rating, reviewText: this.state.reviewText, 
+                                    business_id: this.state.business.business_id,
+                                    user_id: this.props.loggedInUser.user_id })
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data)
+              if(data.success) {
+                //successful login so redirect to homepage
+                this.setState({ isOpen: true, modalTitle: "Congratulations!", modalText: "Your review has been submitted!"});
+              }else{
+                //display error login msg
+                this.setState({ isOpen: true, modalTitle: "Epic Fail", modalText: data.err});
+              }
+          });
     };
 
     hideModal = () => {
@@ -31,8 +54,30 @@ export default class Review extends React.Component {
 
     componentDidMount() {
 
-        this.businessName = (this.props.location.pathname.split('/')[2]);
-        this.setState({ businessName: this.businessName });
+        let businessID = (this.props.location.pathname.split('/')[2]);
+
+        fetch('/getBusinessesInfo?id=' + businessID, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    //successful
+                    var bizInitial = data.business.name.toUpperCase()[0];
+                    
+                    this.setState({
+                        business: data.business,
+                        bizInitial: bizInitial,
+                        businessName: data.business.name
+                    });
+                } else {
+                    //display error msg
+                    console.log("Fail to load business info")
+                }
+            })
 
     }
 
@@ -42,12 +87,15 @@ export default class Review extends React.Component {
         });
     }
 
+    changeReviewText(e) {
+        this.setState({reviewText: e.target.value});
+    }
 
     render() {
         return (
             <div>
                 <div >
-                    <PageNavbar active="dashboard" />
+                    <PageNavbar active="dashboard" loggedInUser={this.props.loggedInUser}/>
                 </div>
                 <div className="topPic">
                 </div>
@@ -56,7 +104,7 @@ export default class Review extends React.Component {
                     <p className="yourRate">Your Rating: </p>
                     <div style ={{"marginLeft":"0.8rem","marginTop":".9rem","display":"inline-block"}}>
                         <StarRatings
-                            rating={0}
+                            rating={this.state.rating}
                             marginTop="1.5rem"
                             numberOfStars={5}
                             starDimension="1.9rem"
@@ -68,17 +116,17 @@ export default class Review extends React.Component {
                         />
                     </div>
                     <br></br>
-                    <textarea className="reviewBox">
+                    <textarea className="reviewBox" value={this.state.reviewText} onChange={this.changeReviewText}>
                     </textarea>
                     <br></br>
                     <a onClick={this.showModal} style={{ "backgroundColor": "orange", "color": "white" }} type="button" class="reviewBut btn btn-outline-warning">Submit your review!</a>
                     <Modal show={this.state.isOpen} onHide={this.hideModal}>
                         <Modal.Header>
-                            <Modal.Title>Congratulations!</Modal.Title>
+                            <Modal.Title>{this.state.modalTitle}</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body>Your review has been submitted!</Modal.Body>
+                            <Modal.Body>{this.state.modalText}</Modal.Body>
                         <Modal.Footer>
-                            <a style={{ "backgroundColor": "orange", "color": "white", "margin": "auto" }} href={"/business/" + this.state.businessName} type="button" class="reviewBut btn btn-outline-warning" onClick={this.hideModal}>Awesome!</a>
+                            <a style={{ "backgroundColor": "orange", "color": "white", "margin": "auto" }} href={"/business/" + this.state.business.business_id} type="button" class="reviewBut btn btn-outline-warning" onClick={this.hideModal}>Awesome!</a>
                         </Modal.Footer>
                     </Modal>
 
