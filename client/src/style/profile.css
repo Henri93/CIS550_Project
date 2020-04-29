@@ -15,7 +15,7 @@ html,body{
 }
 
 .floater {
-    height: 90vh;
+    height: 100%;
     width: 95%;
     margin-left: auto;
     margin-right: auto;
@@ -122,6 +122,12 @@ html,body{
     height: 0;
 }
 
+body
+{
+  overflow-x:hidden;
+}
+
+
 .nameSpanProfile{
     height: 5.5vw;
     width: 5.5vw;
@@ -156,6 +162,21 @@ html,body{
     margin-top: 2vw;
 }
 
+.tableText {
+    font-size: 3rem;
+    font-weight: 100;
+    color:black;
+    text-decoration: none;
+}
+
+.tableText:hover{
+    color:orange;
+    text-decoration:none;
+
+}
+
+
+
 @media (max-width: 1200px) {
     .sideText{
         margin-top: .7vw;
@@ -177,7 +198,7 @@ html,body{
 @media (min-width: 1200px) {
     .sideText{
         margin-top: 1.8vw;
-        margin-left:10vw;
+        margin-left:73%;
         font-size: 3em;
         display:inherit;
 
@@ -193,3 +214,23 @@ html,body{
     
 }
 
+
+.otherNameSpan {
+    height: 5vw;
+    width: 5vw;
+    box-shadow:  0 0 0 2px orange;
+
+    border-radius: 51%;
+    font-size: 3vw;
+    color: orange;
+
+}
+
+table, tr, td {
+    border: none !important;
+
+}
+
+.lefter {
+    text-align: left;
+}
