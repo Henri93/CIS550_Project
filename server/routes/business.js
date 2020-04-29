@@ -61,8 +61,32 @@ let getReviewsForBusiness = function(req, res, next) {
       });
 }
 
+/*
+ * Route for submitting reviews for business
+ */
+let submitReview = function(req, res, next) {
+    let user_id = req.body.user_id;
+    let business_id = req.body.business_id;
+    let rating = req.body.rating;
+    let reviewText = req.body.reviewText;
+    
+    db.submitReviewForBusiness({user_id: user_id, business_id: business_id, rating: rating, reviewText: reviewText}, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else if(data.length > 0){
+            //serve reviews to front-end to set state
+            res.json({success: true});
+        }else{
+            //no reviews for business...might want to send a special message
+            res.json({success: false, err: "failed to submit review!"});
+        }
+      });
+}
+
 module.exports = { 
     getHomeBusinesses: getHomeBusinesses,
     getBusinessInfo: getBusinessInfo,
-    getReviewsForBusiness, getReviewsForBusiness
+    getReviewsForBusiness: getReviewsForBusiness,
+    submitReview: submitReview
 }

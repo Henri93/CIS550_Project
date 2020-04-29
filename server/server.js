@@ -27,12 +27,14 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 /* Routes involving Users crud */
 app.use('/login', user.login);
+app.get('/getProfile', user.getProfile);
 app.use('/signup', user.signup);
 
 /* Routes involving Businesses */
 app.get('/getHomeBusinesses', business.getHomeBusinesses);
 app.get('/getBusinessesInfo', business.getBusinessInfo);
 app.get('/getReviews', business.getReviewsForBusiness);
+app.use('/submitReview', business.submitReview);
 
 app.get('/api', (req,res) => {
   //dummy route to test serving data to frontend

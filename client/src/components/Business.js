@@ -60,25 +60,26 @@ export default class Business extends React.Component {
             })
 
         //load first 10 reviews sorted by date
-        fetch('/getReviews?id=' + businessID, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    //successful
-                    console.log("Reviews: " + data.reviews)
-                    this.setState({
-                        reviews: data.reviews
-                    });
-                } else {
-                    //display error msg
-                    console.log("Fail to load reviews ofr business")
-                }
-            })
+        //UNCOMMENT THIS WHEN REVIEWS TABLE EXISTS
+    //     fetch('/getReviews?id=' + businessID, {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         }
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             if (data.success) {
+    //                 //successful
+    //                 console.log("Reviews: " + data.reviews)
+    //                 this.setState({
+    //                     reviews: data.reviews
+    //                 });
+    //             } else {
+    //                 //display error msg
+    //                 console.log("Fail to load reviews ofr business")
+    //             }
+    //         })
     }
 
 
@@ -87,7 +88,7 @@ export default class Business extends React.Component {
         return (
             <div>
                 <div >
-                    <PageNavbar active="dashboard" />
+                    <PageNavbar active="dashboard" loggedInUser={this.props.loggedInUser}/>
                 </div>
                 <div className="topPic">
                 </div>
@@ -104,7 +105,7 @@ export default class Business extends React.Component {
                     />
                     <p className="numberOfReviews">{this.state.business.review_count} Reviews</p>
                     <p className="cats">{this.state.categories}</p>
-                    <a href={"/review/" + this.state.business.name} type="button" class="reviewBut btn btn-outline-warning">Leave a review</a>
+                    <a href={"/review/" + this.state.business.business_id} type="button" class="reviewBut btn btn-outline-warning">Leave a review</a>
                     <hr className="pageBreak"></hr>
                     <h2>Location</h2>
                     <br></br>

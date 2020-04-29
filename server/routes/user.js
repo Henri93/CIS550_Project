@@ -30,9 +30,25 @@ let login = function(req, res, next) {
             req.session.authenticated = true;
 
             //return success
-            res.json({success: true, res: data['username']});
+            res.json({success: true, res: data});
         }
     });
+}
+
+/*
+ * Route for getting a profile by user_id
+ */
+let getProfile = function(req, res, next) {
+    var id = req.query.id;
+    
+    db.getProfileInfo({id: id}, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else{
+            res.json({success: true, profile: data});
+        }
+      });
 }
 
 /*
@@ -53,13 +69,14 @@ let signup = function(req, res, next) {
             req.session.authenticated = true;
             
             //return success
-            res.json({success: true, res: data['username']});
+            res.json({success: true, res: data});
 		}
   	});
 };
 
 module.exports = { 
-    login:login,
+    login: login,
+    getProfile: getProfile,
     signup: signup,
     isAuthenticated:isAuthenticated
 }

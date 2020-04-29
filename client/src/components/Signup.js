@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../style/signup.css"
 
-export default function Signup() {
+export default function Signup(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
@@ -26,6 +26,7 @@ export default function Signup() {
         console.log(data)
         if(data.success) {
           //successful signup so redirect to homepage
+          props.onLogin(data); 
           history.push("/");
         }else{
           //display error signup msg
