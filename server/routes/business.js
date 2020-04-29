@@ -25,6 +25,68 @@ let getHomeBusinesses = function(req, res, next) {
       });
 }
 
+/*
+ * Route for returning business' info
+ */
+let getBusinessInfo = function(req, res, next) {
+    var id = req.query.id;
+    
+    db.getBusinessInfo({id: id}, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else{
+            res.json({success: true, business: data});
+        }
+      });
+}
+
+/*
+ * Route for returning reviews for business
+ */
+let getReviewsForBusiness = function(req, res, next) {
+    var id = req.query.id;
+    
+    db.getReviewsForBusiness({id: id}, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else if(data.length > 0){
+            //serve reviews to front-end to set state
+            res.json({success: true, reviews: data});
+        }else{
+            //no reviews for business...might want to send a special message
+            res.json({success: true, reviews: []});
+        }
+      });
+}
+
+/*
+ * Route for submitting reviews for business
+ */
+let submitReview = function(req, res, next) {
+    let user_id = req.body.user_id;
+    let business_id = req.body.business_id;
+    let rating = req.body.rating;
+    let reviewText = req.body.reviewText;
+    
+    db.submitReviewForBusiness({user_id: user_id, business_id: business_id, rating: rating, reviewText: reviewText}, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else if(data.length > 0){
+            //serve reviews to front-end to set state
+            res.json({success: true});
+        }else{
+            //no reviews for business...might want to send a special message
+            res.json({success: false, err: "failed to submit review!"});
+        }
+      });
+}
+
 module.exports = { 
-    getHomeBusinesses: getHomeBusinesses
+    getHomeBusinesses: getHomeBusinesses,
+    getBusinessInfo: getBusinessInfo,
+    getReviewsForBusiness: getReviewsForBusiness,
+    submitReview: submitReview
 }

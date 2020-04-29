@@ -1,22 +1,30 @@
 import React from 'react';
+import cookie from 'react-cookies'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
 import "../style/header.css"
+
 
 export default class PageNavbar extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.handleLogout = this.handleLogout.bind(this);
 		this.state = {
 			navDivs: []
 		}
 	}
 
+	handleLogout(event) {
+		console.log("Handle logout")
+		cookie.remove('user', { path: '/' })
+	}
+	
+
 	componentDidMount() {
 		const pageList = ['Map', 'My Profile', 'Reccomendations'];
-		const username = "jacob platin";
+		const username = this.props.loggedInUser.username;
 		let hrefs = ['', 'profile/' + username,'reccomendations/' + username];
 		let navbarDivs = pageList.map((page, i) => {
 
@@ -41,7 +49,7 @@ export default class PageNavbar extends React.Component {
 			<div className="PageNavbar" >
 				<nav className="navbar navbar-expand-lg navbar-light bg-light">	
 
-			      <span style = {{"color":"#ff4a4a"}} className="navbar-brand center">Yelp</span>
+			      <span style = {{"color":"orange", "letterSpacing":"-0.5rem","marginTop":"-1.6rem","marginBottom":"-1.3rem" ,"fontSize":"3.6rem"}} className="navbar-brand center">ꟻF</span>
 			      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
 			        <div  className="navbar-nav">
 			        {this.state.navDivs}
@@ -57,20 +65,20 @@ export default class PageNavbar extends React.Component {
 
 				
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
     aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span className="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown">
-        <a style = {{"cursor":"grab"}} class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+  <div className="collapse navbar-collapse" id="navbarSupportedContent-4">
+    <ul className="navbar-nav ml-auto">
+      <li className="nav-item dropdown">
+        <a style = {{"cursor":"grab"}} className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <i  class="fas fa-user"></i> Jacob's Profile </a>
-        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-          <a class="dropdown-item" href="/profile/jacob platin">My account</a>
-		  <a class="dropdown-item" href="/reccomendations/jacob platin">Reccomendations</a>
-          <a class="dropdown-item" href="/login">Log out</a>
+          <i  className="fas fa-user"></i> {this.props.loggedInUser.username} Profile </a>
+        <div className="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+          <a className="dropdown-item" href={'/profile/' + this.props.loggedInUser.username}>My account</a>
+		  <a className="dropdown-item" href={'/reccomendations/' + this.props.loggedInUser.username}>Reccomendations</a>
+          <a className="dropdown-item" onClick={this.handleLogout} href="/login">Log out</a>
         </div>
       </li>
     </ul>
