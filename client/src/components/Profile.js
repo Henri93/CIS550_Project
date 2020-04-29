@@ -14,8 +14,17 @@ export default class Profile extends React.Component {
             username: "",
             onProfile: true,
             userProfile: {},
-            names: ["compliment_cool", "compliment_funny", "compliment_hot", "compliment_cute", "compliment_writer"],
-            friends: ["Mike", "Sat", "Hort"]
+            names: ["compliment_cool", "compliment_hot"
+                , "compliment_more"
+                , "compliment_profile"
+                , "compliment_cute"
+                , "compliment_list"
+                , "compliment_note"
+                , "compliment_plain"
+                , "compliment_funny"
+                , "compliment_writer"
+                , "compliment_photos"],
+            friends: ["Mike", "Sat", "Hort", "John", "mark", "Sa", "Fasd"]
         };
 
 
@@ -41,19 +50,19 @@ export default class Profile extends React.Component {
                 'Content-Type': 'application/json',
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                //successful
-                console.log(data.profile)
-                this.setState({
-                    userProfile: data.profile
-                });
-            } else {
-                //display error msg
-                console.log("Fail to load profile!")
-            }
-        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    //successful
+                    console.log(data.profile)
+                    this.setState({
+                        userProfile: data.profile
+                    });
+                } else {
+                    //display error msg
+                    console.log("Fail to load profile!")
+                }
+            })
     }
 
 
@@ -90,9 +99,9 @@ export default class Profile extends React.Component {
                             <div class="row">
 
                                 {this.state.names.map(name => (
-                                    <div class="col-sm-2">
-                                        <span class="nameSpanProfile">{this.state.userProfile[name] !== null ? this.state.userProfile[name] : 0 }</span>
-                                        <p >{name}</p>
+                                    <div className={name == "compliment_note" ? 'col-sm-2 offset-sm-1' : 'col-sm-2'}>
+                                        <span class="nameSpanProfile">{this.state.userProfile[name] !== null ? this.state.userProfile[name] : 0}</span>
+                                        <p style={{ "marginTop": "6vw" }} >{name}</p>
                                     </div>
                                 ))}
                             </div>
@@ -100,14 +109,14 @@ export default class Profile extends React.Component {
                     </div>
 
                     <div className={this.state.onProfile ? 'hidden' : 'compArea'}>
-                        
-                    <div class="container">
+
+                        <div class="container">
                             <div class="row">
 
                                 {this.state.friends.map(name => (
                                     <div class="col-sm-3">
                                         <span class="nameSpanProfile2">{name.toUpperCase()[0]}</span>
-                                        <p className="sideText">{name}</p>
+                                        <a href = {"/profile/" + name} className="sideText">{name}</a>
                                     </div>
                                 ))}
 

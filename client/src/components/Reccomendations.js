@@ -47,7 +47,7 @@ export default class Reccomendations extends React.Component {
                                             <span class="nameSpanForCard">{profile.toUpperCase()[0]}</span>
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text">{profile}</p>
+                                            <p class="card-text"><b>{profile}</b> was reccomended because of your reviews!</p>
                                             <button style={{"backgroundColor":"orange", "color":"white"}}type="button" class="btn btn-warning">Go to</button>
                                         </div>
                                     </div>
