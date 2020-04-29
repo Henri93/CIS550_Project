@@ -110,13 +110,13 @@ export default class Business extends React.Component {
                     <br></br>
                     <div class="card" style={{ "margin": "auto", "width": "25vw" }}>
                         <div style={{ "height": "14vw" }} class="card-header">
-                            <GoogleMap
+                            {/* <GoogleMap
                                 ref={(map) => _map = map}
                                 defaultZoom={10}
                                 defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
                                 defaultOptions={{ styles: mapStyles }}
                                 onDragEnd={this.updateBusinesses}
-                            > </GoogleMap>
+                            > </GoogleMap> */}
                         </div>
                         <div class="card-body">
                             <p class="card-text">{this.state.business.address}<br /> {this.state.business.city + ", " + this.state.business.state}</p>
