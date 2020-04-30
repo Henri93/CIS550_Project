@@ -29,6 +29,8 @@ export default class Business extends React.Component {
 
         this.loadMore = this.loadMore.bind(this);
 
+
+
     }
 
     componentDidMount() {
@@ -79,7 +81,7 @@ export default class Business extends React.Component {
                     this.setState({
                         reviews: data.reviews
                     });
-                    if(this.state.reviews.length < 3){
+                    if (this.state.reviews.length < 3) {
                         this.setState({
                             hideLoadMore: true
                         });
@@ -90,7 +92,7 @@ export default class Business extends React.Component {
                 }
             })
 
-        
+
 
 
     }
@@ -142,7 +144,8 @@ export default class Business extends React.Component {
                                 loadingElement={<div style={{ height: `100%` }} />}
                                 containerElement={<div style={{ height: `100%` }} />}
                                 mapElement={<div style={{ height: `100%` }} />}
-                                draggable={false}
+                                lat={this.state.business.latitude}
+                                long={this.state.business.longitude}
                             />}
                         </div>
                         <div className="card-body">
@@ -154,14 +157,14 @@ export default class Business extends React.Component {
                     <hr className="pageBreak"></hr>
                     <h2>Reviews</h2>
                     <div className="tableDiv">
-                        <table cellSpacing="0" cellPadding="0" style={{ "margin": "auto", "marginLeft": "25%", "marginTop": "1vw", "width": "80%", "wordBreak": "break-all" }} class="table table-bordered">
+                        <table cellSpacing="0" cellPadding="0" style={{ "margin": "auto", "marginLeft": "15%", "marginTop": "1vw", "width": "80%", "wordBreak": "break-all" }} class="table table-bordered">
                             <tbody>
                                 {this.state.reviews.slice(0, this.state.limiter).map(review => (
                                     <tr>
                                         <td className="righter">
                                             <div style={{ "fontSize": "1rem", }}>
                                                 <p className="otherNameSpan2">{review.name.toUpperCase()[0]}</p>
-                                                <p> {review.name}
+                                                <p className = "userInfoText"> {review.name}
                                                     <br></br>
                                                     {review.review_count} Reviews
                                             <br></br>
@@ -170,7 +173,7 @@ export default class Business extends React.Component {
 
                                             </div>
                                         </td>
-                                        <td style={{ "display": "inline-block", "wordBreak": "break-word" }} className="lefter">
+                                        <td className="lefter">
                                             <StarRatings
                                                 rating={review.stars}
                                                 starRatedColor="orange"
@@ -179,7 +182,7 @@ export default class Business extends React.Component {
                                                 starSpacing="2px"
                                                 name='rating'
                                             />
-                                            <p href={"/profile/"} className="dateText">{review.date}</p>
+                                            <p href={"/profile/"} className="dateText">{(new Date(review.date)).toDateString()}</p>
                                             <p className="reviewText">
                                                 {review.text}
 

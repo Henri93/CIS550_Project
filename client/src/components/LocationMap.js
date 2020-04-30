@@ -18,17 +18,24 @@ class LocationMap extends Component {
         super(props);
     }
 
+
     render() {
+        console.log(typeof this.props.long);
+
         return (
             <GoogleMap
                 ref={(map) => _map = map}
-                defaultZoom={10}
-                defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
+                defaultZoom={12}
+                defaultCenter={{ lat: this.props.lat, lng: this.props.long }}
                 defaultOptions={{ styles: mapStyles, draggable: false, mapTypeControl: false, streetViewControl: false }}
             >
 
                 <Marker
-                    position = {{ lat: 45.4211, lng: -75.6903 }} 
+                    position = {{ lat: this.props.lat, lng: this.props.long }} 
+                    icon={{
+                        url: 'https://www.pinclipart.com/picdir/big/174-1747068_vector-graphics-google-map-marker-green-clipart.png',
+                        scaledSize: new window.google.maps.Size(27, 45)
+                      }}
                 ></Marker>
 
             </GoogleMap>
