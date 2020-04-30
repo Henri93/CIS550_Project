@@ -25,7 +25,17 @@ export default class Profile extends React.Component {
                 , "compliment_funny"
                 , "compliment_writer"
                 , "compliment_photos"],
-            friends: ["Mike", "Sat", "Hort", "johnsaintmarksa@asdasd.com", "mark", "Sa", "Fasd"]
+            friends: ["Mike", "Sat", "Hort", "johnsaintmarksa@asdasd.com", "mark", "Sa", "Fasd"],
+            mapToName: {"compliment_cool" : "Cool", "compliment_hot": "Hot"
+                , "compliment_more":"More"
+                , "compliment_profile":"Profile"
+                , "compliment_cute":"Cute"
+                , "compliment_list":"Awesome Lite"
+                , "compliment_note":"Great Note"
+                , "compliment_plain":"Cool Profile"
+                , "compliment_funny":"Funny"
+                , "compliment_writer":"Good Writer"
+                , "compliment_photos":"Great Photos"}
         };
 
 
@@ -109,7 +119,7 @@ export default class Profile extends React.Component {
                                 {this.state.names.map(name => (
                                     <div className={name == "compliment_note" ? 'col-sm-2 offset-sm-1' : 'col-sm-2'}>
                                         <span class="nameSpanProfile">{this.state.userProfile[name] !== null ? this.state.userProfile[name] : 0}</span>
-                                        <p style={{ "marginTop": "6vw" }} >{name}</p>
+                                        <p style={{ "marginTop": "6vw" }} >{this.state.mapToName[name]}</p>
                                     </div>
                                 ))}
                             </div>

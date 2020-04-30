@@ -15,7 +15,8 @@ html,body{
 }
 
 .floater {
-    height: 100%;
+    height:auto;
+overflow:visible;
     width: 95%;
     margin-left: auto;
     margin-right: auto;
@@ -24,8 +25,8 @@ html,body{
     margin-right: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
     background-color: white;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;    text-align: center;
+    border-radius: 20px;
+    text-align: center;
     position: absolute;
     z-index: 10;
 }
@@ -104,27 +105,27 @@ html,body{
 }
 
 
-
 .profileArea{
     width: 100%;
-    height:20vw;
+    margin-bottom: 5vw;
+    height:auto;
 }
 
 .compArea{
 
     width: 100%;
-    height:20vw;
 
 }
 
 .hidden {
     visibility: hidden;
     height: 0;
+    overflow: auto;
 }
 
 body
 {
-  overflow-x:hidden;
+  min-height: 100%;
 }
 
 
