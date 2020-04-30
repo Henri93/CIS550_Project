@@ -9,6 +9,8 @@ import { faClock, faAlignLeft } from '@fortawesome/free-solid-svg-icons';
 export default class Profile extends React.Component {
     constructor(props) {
         super(props);
+        this.getFriends = this.getFriends.bind(this);
+        
         this.state = {
             username: "",
             onProfile: true,
@@ -47,58 +49,8 @@ export default class Profile extends React.Component {
 
     };
 
-    componentDidMount() {
-
-
-        var friends = ["Mike@Mike.com", "Sat", "Hort", "johnsaintmarksa@asdasd.com", "mark", "Sa", "Fasd"];
-        var elementsToRender = []
-        if (friends.length > 0) {
-            for (var i = 0; i < friends.length; i += 2) {
-                elementsToRender.push(
-                    <tr>
-                        <td className="righter">
-                            <div style={{ "fontSize": "3rem", }}>
-                                <p className="otherNameSpan">{friends[i].toUpperCase()[0]}</p>
-                            </div>
-                        </td>
-                        <td className="lefter">
-                            <a href={"/profile/" + friends[i]} className="tableText">{friends[i]}</a>
-                        </td>
-                        {friends[i + 1] && [
-
-                            <td className="righter">
-                                <div style={{ "fontSize": "3rem", }}>
-                                    <p className="otherNameSpan">{friends[i + 1].toUpperCase()[0]}</p>
-                                </div>
-                            </td>,
-
-                            <td className="lefter">
-                                <a href={"/profile/" + friends[i + 1]} className="tableText">{friends[i + 1]}</a>
-                            </td>
-                        ]
-                        }
-
-                    </tr>
-                );
-
-            };
-        } else {
-            elementsToRender.push(
-
-                <h1 style={{"marginBottom":"3vw", "fontWeight":"100"}}>Looks like you don't have any friends right now: try searching for them!</h1>
-            )
-        }
-
-
-        this.initial = (this.props.location.pathname.split('/')[2]).toUpperCase()[0];
-        this.username = (this.props.location.pathname.split('/')[2]);
-
-        this.setState({ username: this.username, friendsListTable: elementsToRender });
-        this.setState({ initial: this.initial });
-        this.setState({ isThisMe: this.state.loggedInUserUserId == this.username });
-
-        //get profile informatons
-        fetch('/getProfile?id=' + this.username, {
+    getFriends(user_id) {
+        fetch('/getFriends?id=' + user_id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -108,17 +60,89 @@ export default class Profile extends React.Component {
             .then(data => {
                 if (data.success) {
                     //successful
-                    console.log(data.profile)
+                    console.log("Friends:" + JSON.stringify(data.friends))
+                    let elementsToRender = []
+                    let friends = data.friends;
+                    if (friends.length > 0) {
+                        for (var i = 0; i < friends.length; i += 2) {
+                            elementsToRender.push(
+                                <tr>
+                                    <td className="righter">
+                                        <div style={{ "fontSize": "3rem", }}>
+                                            <p className="otherNameSpan">{friends[i].name.toUpperCase()[0]}</p>
+                                        </div>
+                                    </td>
+                                    <td className="lefter">
+                                        <a href={"/profile/" + friends[i].friends} className="tableText">{friends[i].name}</a>
+                                    </td>
+                                    {friends[i + 1] && [
+            
+                                        <td className="righter">
+                                            <div style={{ "fontSize": "3rem", }}>
+                                                <p className="otherNameSpan">{friends[i + 1].name.toUpperCase()[0]}</p>
+                                            </div>
+                                        </td>,
+            
+                                        <td className="lefter">
+                                            <a href={"/profile/" + friends[i + 1].friends} className="tableText">{friends[i + 1].name}</a>
+                                        </td>
+                                    ]
+                                    }
+            
+                                </tr>
+                            );
+            
+                        };
+                    } else {
+                        elementsToRender.push(
+            
+                            <h1 style={{"marginBottom":"3vw", "fontWeight":"100"}}>Looks like you don't have any friends right now: try searching for them!</h1>
+                        )
+                    }
+                    this.setState({ friendsListTable: elementsToRender });
+                } else {
+                    //display error msg
+                    console.log("Fail to load friends!")
+                }
+            })
+    }
+
+    componentDidMount() {
+        var elementsToRender = []
+        elementsToRender.push(
+            <h1 style={{"marginBottom":"3vw", "fontWeight":"100"}}>Looks like you don't have any friends right now: try searching for them!</h1>
+        )
+        
+        this.user_id = (this.props.location.pathname.split('/')[2]);
+
+        this.setState({ user_id: this.user_id, friendsListTable: elementsToRender });
+        this.setState({ isThisMe: this.state.loggedInUserUserId == this.user_id });
+
+        //get profile informatons
+        fetch('/getProfile?id=' + this.user_id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    //successful
+                    this.initial = data.profile.name.toUpperCase()[0];
                     this.setState({
-                        userProfile: data.profile
+                        userProfile: data.profile,
+                        initial: this.initial,
+                        username: data.profile.name
                     });
                 } else {
                     //display error msg
                     console.log("Fail to load profile!")
                 }
+            }).then(data => {
+                //then get friends after load profile
+                this.getFriends(this.state.userProfile.user_id)
             })
-
-
     }
 
 

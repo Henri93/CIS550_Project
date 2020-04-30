@@ -74,9 +74,26 @@ let signup = function(req, res, next) {
   	});
 };
 
+/*
+ * Route for getting friends of a user_id
+ */
+let getFriends = function(req, res, next) {
+    var id = req.query.id;
+    
+    db.getFriends({id: id}, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else{
+            res.json({success: true, friends: data});
+        }
+      });
+}
+
 module.exports = { 
     login: login,
     getProfile: getProfile,
+    getFriends: getFriends,
     signup: signup,
     isAuthenticated:isAuthenticated
 }

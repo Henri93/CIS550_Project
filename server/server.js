@@ -28,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 /* Routes involving Users crud */
 app.use('/login', user.login);
 app.get('/getProfile', user.getProfile);
+app.get('/getFriends', user.getFriends);
 app.use('/signup', user.signup);
 
 /* Routes involving Businesses */

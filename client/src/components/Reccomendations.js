@@ -12,16 +12,14 @@ export default class Reccomendations extends React.Component {
 
         this.state = {
             username: "",
-            reccomendationsProfiles: ["Jacob", "Noah", "Max"]
+            reccomendationsProfiles: ["Jacob", "Noah", "Max"],
+            mapToProfilesId: {Jacob: "-3DtQIgZRNi0wS7lhfvo_w", Noah: "--agAy0vRYwG6WqbInorfg", Max: "-0IhhfzlIAFTEZkS0-PtBw"}
         };
-
-
     }
 
     componentDidMount() {
-
-        this.initial = (this.props.location.pathname.split('/')[2]).toUpperCase()[0];
-        this.username = (this.props.location.pathname.split('/')[2]);
+        this.username = this.props.loggedInUser.username;
+        this.initial = this.username.toUpperCase()[0];
 
         this.setState({ username: this.username });
         this.setState({ initial: this.initial });
@@ -48,7 +46,7 @@ export default class Reccomendations extends React.Component {
                                         </div>
                                         <div class="card-body">
                                             <p class="card-text"><b>{profile}</b> was reccomended because of your reviews!</p>
-                                            <a style={{"backgroundColor":"orange", "color":"white"}}type="button" class="btn btn-warning" href = {"/profile/" + profile} >Go to {profile + "'s"}  profile</a>
+                                            <a style={{"backgroundColor":"orange", "color":"white"}}type="button" class="btn btn-warning" href = {"/profile/" + this.state.mapToProfilesId[profile]} >Go to {profile + "'s"}  profile</a>
                                         </div>
                                     </div>
                                 </div>

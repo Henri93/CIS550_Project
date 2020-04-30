@@ -95,7 +95,7 @@ var myDB_getProfileInfo = function(id, route_callbck){
     }
 
     //query db
-    con.query(`SELECT * FROM Users u WHERE u.name="`+id.id+`";`,  function(err, result, fields) {
+    con.query(`SELECT * FROM Users u WHERE u.user_id="`+id.id+`";`,  function(err, result, fields) {
         if (err){
             route_callbck(null, "Database lookup error: "+err);
             throw (err);
@@ -105,6 +105,32 @@ var myDB_getProfileInfo = function(id, route_callbck){
             route_callbck(result[0], null);
         }else{
             route_callbck(null, "User profile not found");
+        }
+    });
+}
+
+/*
+ * Function to get friends of a user
+ * @Return list of friends 
+ */
+var myDB_getFriends = function(id, route_callbck){
+    
+    if(id.id === ""){
+        route_callbck(null, "No id provided!");
+    }
+
+    //query db
+    con.query(`SELECT f.friends, u.name FROM Friends f JOIN Users u ON f.friends = u.user_id WHERE f.user_id="`+id.id+`";`,  function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result && Array.isArray(result) && result.length > 0){
+            //return list
+            route_callbck(result, null);
+        }else{
+            //no friends
+            route_callbck([], null);
         }
     });
 }
@@ -214,6 +240,7 @@ var database = {
     validateLogin: myDB_validateLogin,
     createAccount: myDB_createAccount,
     getProfileInfo: myDB_getProfileInfo,
+    getFriends: myDB_getFriends,
     getBusinessForArea: myDB_getBusinessForArea,
     getBusinessInfo: myDB_getBusinessInfo,
     getReviewsForBusiness: myDB_getReviewsForBusiness,
