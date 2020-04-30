@@ -10,11 +10,9 @@ import {
     Marker,
     InfoWindow
 } from "react-google-maps";
-import mapStyles from "../style/mapStyles";
+import LocationMap from "../components/LocationMap"
 
-
-var _map;
-
+const MapWrapped = withScriptjs(withGoogleMap(LocationMap));
 
 
 export default class Business extends React.Component {
@@ -23,8 +21,16 @@ export default class Business extends React.Component {
 
         this.state = {
             business: {},
-            reviews: []
+            reviews: [],
+            anyt: [1, 2, 3, 4, 5, 6, 7],
+            limiter: 2,
+            hideLoadMore: false
         };
+
+        this.loadMore = this.loadMore.bind(this);
+
+
+
     }
 
     componentDidMount() {
@@ -75,20 +81,42 @@ export default class Business extends React.Component {
                     this.setState({
                         reviews: data.reviews
                     });
+                    if (this.state.reviews.length < 3) {
+                        this.setState({
+                            hideLoadMore: true
+                        });
+                    }
                 } else {
                     //display error msg
                     console.log("Fail to load reviews ofr business")
                 }
             })
+
+
+
+
     }
 
+
+    loadMore() {
+
+        var limit = this.state.limiter + 2;
+        this.setState({
+            limiter: limit
+        });
+        if (limit >= this.state.reviews.length) {
+            this.setState({
+                hideLoadMore: true
+            });
+        }
+    }
 
 
     render() {
         return (
             <div>
                 <div >
-                    <PageNavbar active="dashboard" loggedInUser={this.props.loggedInUser}/>
+                    <PageNavbar active="dashboard" loggedInUser={this.props.loggedInUser} />
                 </div>
                 <div className="topPic">
                 </div>
@@ -111,13 +139,14 @@ export default class Business extends React.Component {
                     <br></br>
                     <div className="card" style={{ "margin": "auto", "width": "25vw" }}>
                         <div style={{ "height": "14vw" }} className="card-header">
-                            {/* <GoogleMap
-                                ref={(map) => _map = map}
-                                defaultZoom={10}
-                                defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
-                                defaultOptions={{ styles: mapStyles }}
-                                onDragEnd={this.updateBusinesses}
-                            > </GoogleMap> */}
+                            {<MapWrapped
+                                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAi8On2sh9wpXhquXfaDcdpMl_JmDbhBO0`}
+                                loadingElement={<div style={{ height: `100%` }} />}
+                                containerElement={<div style={{ height: `100%` }} />}
+                                mapElement={<div style={{ height: `100%` }} />}
+                                lat={this.state.business.latitude}
+                                long={this.state.business.longitude}
+                            />}
                         </div>
                         <div className="card-body">
                             <p className="card-text">{this.state.business.address}<br /> {this.state.business.city + ", " + this.state.business.state}</p>
@@ -127,7 +156,47 @@ export default class Business extends React.Component {
 
                     <hr className="pageBreak"></hr>
                     <h2>Reviews</h2>
+                    <div className="tableDiv">
+                        <table cellSpacing="0" cellPadding="0" style={{ "margin": "auto", "marginLeft": "15%", "marginTop": "1vw", "width": "80%", "wordBreak": "break-all" }} class="table table-bordered">
+                            <tbody>
+                                {this.state.reviews.slice(0, this.state.limiter).map(review => (
+                                    <tr>
+                                        <td className="righter">
+                                            <div style={{ "fontSize": "1rem", }}>
+                                                <p className="otherNameSpan2">{review.name.toUpperCase()[0]}</p>
+                                                <p className = "userInfoText"> {review.name}
+                                                    <br></br>
+                                                    {review.review_count} Reviews
+                                            <br></br>
+                                                    {review.average_stars} Average Rating
+                                            </p>
 
+                                            </div>
+                                        </td>
+                                        <td className="lefter">
+                                            <StarRatings
+                                                rating={review.stars}
+                                                starRatedColor="orange"
+                                                numberOfStars={5}
+                                                starDimension="35px"
+                                                starSpacing="2px"
+                                                name='rating'
+                                            />
+                                            <p href={"/profile/"} className="dateText">{(new Date(review.date)).toDateString()}</p>
+                                            <p className="reviewText">
+                                                {review.text}
+
+                                            </p>
+                                        </td>
+                                    </tr>
+                                ))}
+
+                            </tbody>
+                        </table>
+
+                        <a onClick={this.loadMore} id="loadMoreBut" type="button" className={this.state.hideLoadMore ? "hiddenText" : "btn btn-warning"} >Load More</a>
+
+                    </div>
 
 
                 </div>
