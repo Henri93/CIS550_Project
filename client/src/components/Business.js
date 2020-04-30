@@ -79,12 +79,18 @@ export default class Business extends React.Component {
                     this.setState({
                         reviews: data.reviews
                     });
+                    if(this.state.reviews.length < 3){
+                        this.setState({
+                            hideLoadMore: true
+                        });
+                    }
                 } else {
                     //display error msg
                     console.log("Fail to load reviews ofr business")
                 }
             })
 
+        
 
 
     }
@@ -136,7 +142,7 @@ export default class Business extends React.Component {
                                 loadingElement={<div style={{ height: `100%` }} />}
                                 containerElement={<div style={{ height: `100%` }} />}
                                 mapElement={<div style={{ height: `100%` }} />}
-                                draggable = {false}
+                                draggable={false}
                             />}
                         </div>
                         <div className="card-body">
@@ -150,39 +156,34 @@ export default class Business extends React.Component {
                     <div className="tableDiv">
                         <table cellSpacing="0" cellPadding="0" style={{ "margin": "auto", "marginLeft": "25%", "marginTop": "1vw", "width": "80%", "wordBreak": "break-all" }} class="table table-bordered">
                             <tbody>
-                                {this.state.anyt.slice(0, this.state.limiter).map(name => (
+                                {this.state.reviews.slice(0, this.state.limiter).map(review => (
                                     <tr>
                                         <td className="righter">
                                             <div style={{ "fontSize": "1rem", }}>
-                                                <p className="otherNameSpan2">H</p>
-                                                <p>jplas@asdaaaa.com
-                                                <br></br>
-                                            8 Reviews
+                                                <p className="otherNameSpan2">{review.name.toUpperCase()[0]}</p>
+                                                <p> {review.name}
+                                                    <br></br>
+                                                    {review.review_count} Reviews
                                             <br></br>
-                                            3.9 Average Rating
+                                                    {review.average_stars} Average Rating
                                             </p>
 
                                             </div>
                                         </td>
                                         <td style={{ "display": "inline-block", "wordBreak": "break-word" }} className="lefter">
                                             <StarRatings
-                                                rating={2.43}
+                                                rating={review.stars}
                                                 starRatedColor="orange"
-                                                numberOfStars={this.state.business.stars}
+                                                numberOfStars={5}
                                                 starDimension="35px"
                                                 starSpacing="2px"
                                                 name='rating'
                                             />
-                                            <p href={"/profile/"} className="dateText">May 30, 2019</p>
+                                            <p href={"/profile/"} className="dateText">{review.date}</p>
                                             <p className="reviewText">
-                                                This is a very nice coffee shop in the neighborhood
-                                                . Not sure where they get their beans from. I saw they sell
-                                                "little victories coffee" so it might be from there. Prices are reasonable,
-                                                service is polite and the artwork on drinks is a nice addition. Tried a couple of
-                                                sweets and everything was quite enjoyable. The interior is clean and cozy. Good place to chill on a sunny afternoon.
+                                                {review.text}
 
-
-                                        </p>
+                                            </p>
                                         </td>
                                     </tr>
                                 ))}
