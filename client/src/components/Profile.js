@@ -9,7 +9,6 @@ import { faClock, faAlignLeft } from '@fortawesome/free-solid-svg-icons';
 export default class Profile extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             username: "",
             onProfile: true,
@@ -25,17 +24,18 @@ export default class Profile extends React.Component {
                 , "compliment_funny"
                 , "compliment_writer"
                 , "compliment_photos"],
-            friends: ["Mike", "Sat", "Hort", "johnsaintmarksa@asdasd.com", "mark", "Sa", "Fasd"],
-            mapToName: {"compliment_cool" : "Cool", "compliment_hot": "Hot"
-                , "compliment_more":"More"
-                , "compliment_profile":"Profile"
-                , "compliment_cute":"Cute"
-                , "compliment_list":"Awesome Lite"
-                , "compliment_note":"Great Note"
-                , "compliment_plain":"Cool Profile"
-                , "compliment_funny":"Funny"
-                , "compliment_writer":"Good Writer"
-                , "compliment_photos":"Great Photos"}
+            mapToName: {
+                "compliment_cool": "Cool", "compliment_hot": "Hot"
+                , "compliment_more": "More"
+                , "compliment_profile": "Profile"
+                , "compliment_cute": "Cute"
+                , "compliment_list": "Awesome"
+                , "compliment_note": "Great Note"
+                , "compliment_plain": "Cool Profile"
+                , "compliment_funny": "Funny"
+                , "compliment_writer": "Good Writer"
+                , "compliment_photos": "Great Photos"
+            }
         };
 
 
@@ -50,12 +50,50 @@ export default class Profile extends React.Component {
     componentDidMount() {
 
 
+        var friends = ["Mike@Mike.com", "Sat", "Hort", "johnsaintmarksa@asdasd.com", "mark", "Sa", "Fasd"];
+        var elementsToRender = []
+        if (friends.length > 0) {
+            for (var i = 0; i < friends.length; i += 2) {
+                elementsToRender.push(
+                    <tr>
+                        <td className="righter">
+                            <div style={{ "fontSize": "3rem", }}>
+                                <p className="otherNameSpan">{friends[i].toUpperCase()[0]}</p>
+                            </div>
+                        </td>
+                        <td className="lefter">
+                            <a href={"/profile/" + friends[i]} className="tableText">{friends[i]}</a>
+                        </td>
+                        {friends[i + 1] && [
+
+                            <td className="righter">
+                                <div style={{ "fontSize": "3rem", }}>
+                                    <p className="otherNameSpan">{friends[i + 1].toUpperCase()[0]}</p>
+                                </div>
+                            </td>,
+
+                            <td className="lefter">
+                                <a href={"/profile/" + friends[i + 1]} className="tableText">{friends[i + 1]}</a>
+                            </td>
+                        ]
+                        }
+
+                    </tr>
+                );
+
+            };
+        } else {
+            elementsToRender.push(
+
+                <h1 style={{"marginBottom":"3vw", "fontWeight":"100"}}>Looks like you don't have any friends right now: try searching for them!</h1>
+            )
+        }
+
+
         this.initial = (this.props.location.pathname.split('/')[2]).toUpperCase()[0];
         this.username = (this.props.location.pathname.split('/')[2]);
 
-
-
-        this.setState({ username: this.username });
+        this.setState({ username: this.username, friendsListTable: elementsToRender });
         this.setState({ initial: this.initial });
         this.setState({ isThisMe: this.state.loggedInUserUserId == this.username });
 
@@ -128,32 +166,9 @@ export default class Profile extends React.Component {
 
                     <div className={this.state.onProfile ? 'hidden' : 'compArea'}>
 
-                        <table cellspacing="0" cellpadding="0" style={{ "margin": "auto", "width": "80%", "wordBreak": "break-all" }} class="table table-bordered">
+                        <table cellspacing="0" cellpadding="0" style={{ "margin": "auto", "marginTop": "1vw", "width": "80%", "wordBreak": "break-all" }} class="table table-bordered">
                             <tbody>
-                                {this.state.friends.map(name => (
-                                    // <div style={{"marginTop":"2%"}} class="col-sm-3">
-                                    //     <span class="nameSpanProfile2">{name.toUpperCase()[0]}</span>
-                                    //     <a href = {"/profile/" + name} className="sideText">{name}</a>
-                                    // </div>
-
-                                    <tr>
-                                        {/* <th scope="row">1</th> */}
-                                        <td className="righter">
-                                            <div style={{ "fontSize": "3rem",}}>
-                                                <p className="otherNameSpan">J</p>
-                                            </div>
-                                        </td>
-                                        <td className = "lefter">
-                                            <a href={"/profile/" + name} className="tableText">{name}</a>
-                                        </td>
-                                        <td>
-                                            <div style={{ "fontSize": "3rem" }}>
-                                                <p className="otherNameSpan">J</p>
-                                            </div>
-                                        </td>
-                                        <td className = "lefter"><a className="tableText">{name}</a></td>
-                                    </tr>
-                                ))}
+                                {this.state.friendsListTable}
                             </tbody>
                         </table>
 
