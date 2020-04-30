@@ -19,7 +19,7 @@ con.connect(function(err) {
     let q3 = 'DELETE FROM Users WHERE name=\'test@test.com\''
     let q4 = 'ALTER TABLE Users MODIFY COLUMN password VARCHAR(64)'
     let q5 = 'ALTER TABLE Users MODIFY COLUMN user_id VARCHAR(255) UNIQUE'
-    let q6 = 'SELECT * FROM Reviews LIMIT 1;'
+    let q6 = 'SELECT * FROM Reviews ORDER BY date DESC LIMIT 5;'
 
     con.query(q6,  function(err, result, fields) {
         if (err) throw (err);

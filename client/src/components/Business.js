@@ -60,26 +60,26 @@ export default class Business extends React.Component {
             })
 
         //load first 10 reviews sorted by date
-        //UNCOMMENT THIS WHEN REVIEWS TABLE EXISTS
-    //     fetch('/getReviews?id=' + businessID, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         }
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             if (data.success) {
-    //                 //successful
-    //                 console.log("Reviews: " + data.reviews)
-    //                 this.setState({
-    //                     reviews: data.reviews
-    //                 });
-    //             } else {
-    //                 //display error msg
-    //                 console.log("Fail to load reviews ofr business")
-    //             }
-    //         })
+        fetch('/getReviews?id=' + businessID, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    //successful
+                    console.log("Reviews")
+                    console.log(data.reviews)
+                    this.setState({
+                        reviews: data.reviews
+                    });
+                } else {
+                    //display error msg
+                    console.log("Fail to load reviews ofr business")
+                }
+            })
     }
 
 
@@ -105,12 +105,12 @@ export default class Business extends React.Component {
                     />
                     <p className="numberOfReviews">{this.state.business.review_count} Reviews</p>
                     <p className="cats">{this.state.categories}</p>
-                    <a href={"/review/" + this.state.business.business_id} type="button" class="reviewBut btn btn-outline-warning">Leave a review</a>
+                    <a href={"/review/" + this.state.business.business_id} type="button" className="reviewBut btn btn-outline-warning">Leave a review</a>
                     <hr className="pageBreak"></hr>
                     <h2>Location</h2>
                     <br></br>
-                    <div class="card" style={{ "margin": "auto", "width": "25vw" }}>
-                        <div style={{ "height": "14vw" }} class="card-header">
+                    <div className="card" style={{ "margin": "auto", "width": "25vw" }}>
+                        <div style={{ "height": "14vw" }} className="card-header">
                             {/* <GoogleMap
                                 ref={(map) => _map = map}
                                 defaultZoom={10}
@@ -119,9 +119,9 @@ export default class Business extends React.Component {
                                 onDragEnd={this.updateBusinesses}
                             > </GoogleMap> */}
                         </div>
-                        <div class="card-body">
-                            <p class="card-text">{this.state.business.address}<br /> {this.state.business.city + ", " + this.state.business.state}</p>
-                            <a target="_blank" style={{ "backgroundColor": "orange", "color": "white" }} href="https://www.google.com/maps/dir/?api=1&destination=292+McArthur+Avenue+Vanier+ON" type="button" class="btn btn-warning">Directions</a>
+                        <div className="card-body">
+                            <p className="card-text">{this.state.business.address}<br /> {this.state.business.city + ", " + this.state.business.state}</p>
+                            <a target="_blank" style={{ "backgroundColor": "orange", "color": "white" }} href="https://www.google.com/maps/dir/?api=1&destination=292+McArthur+Avenue+Vanier+ON" type="button" className="btn btn-warning">Directions</a>
                         </div>
                     </div>
 
@@ -131,7 +131,7 @@ export default class Business extends React.Component {
 
 
                 </div>
-                <span class="nameSpan">{this.state.bizInitial}</span>
+                <span className="nameSpan">{this.state.bizInitial}</span>
 
             </div>
         );

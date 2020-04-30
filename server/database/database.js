@@ -171,7 +171,7 @@ var myDB_getReviewsForBusiness = function(id, route_callbck){
     }
 
     //query db for reviews
-    con.query(`SELECT * FROM Reviews r WHERE r.business_id="`+id.id+`";`,  function(err, result, fields) {
+    con.query(`SELECT * FROM Reviews r JOIN Users u ON r.user_id = u.user_id WHERE r.business_id="`+id.id+`" ORDER BY r.date DESC LIMIT 10;`,  function(err, result, fields) {
         if (err){
             route_callbck(null, "Database lookup error: "+err);
             throw (err);
@@ -197,17 +197,17 @@ var myDB_submitReviewForBusiness = function(data, route_callbck){
     let review = {user_id: data.user_id, business_id: data.business_id, rating: data.rating, text: data.reviewText, date: date, useful: 0, funny: 0, cool: 0}
     console.log("submitting review: " + JSON.stringify(review))
     
-    //UNCOMMENT THIS WHEN REVIEWS TABLE EXISTS
-    route_callbck(null, "Reviews table is missing!");
-    // con.query('INSERT INTO Reviews SET ?', review, function(err, result, fields) {
-    //     if (err){
-    //         route_callbck(null, "Database lookup error: "+err);
-    //         throw (err);
-    //     }
-    //     if (result){
-    //         route_callbck({ rating : data.rating, reviewText : data.reviewText}, null);
-    //     } 
-    // });
+    // //UNCOMMENT THIS WHEN REVIEWS TABLE EXISTS
+    // route_callbck(null, "Reviews table is missing!");
+    con.query('INSERT INTO Reviews SET ?', review, function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        }
+        if (result){
+            route_callbck({ rating : data.rating, reviewText : data.reviewText}, null);
+        } 
+    });
 }
 
 var database = {
