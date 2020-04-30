@@ -26,7 +26,7 @@ export default class Profile extends React.Component {
                 , "compliment_photos"],
             mapToName: {
                 "compliment_cool": "Cool", "compliment_hot": "Hot"
-                , "compliment_more": "More"
+                , "compliment_more": "Helpful"
                 , "compliment_profile": "Profile"
                 , "compliment_cute": "Cute"
                 , "compliment_list": "Awesome"

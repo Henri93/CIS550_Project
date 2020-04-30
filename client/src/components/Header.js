@@ -89,11 +89,11 @@ export default class PageNavbar extends React.Component {
 
 
 
-					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
-						aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+					<button className="navbar-toggler"  data-toggle="collapse" data-target=".navbar-collapse"
+						aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
 						<span className="navbar-toggler-icon"></span>
 					</button>
-					<div className="collapse navbar-collapse" id="navbarSupportedContent-4">
+					<div className="collapse navbar-collapse">
 						<ul className="navbar-nav ml-auto">
 							<li className="nav-item dropdown">
 								<a style={{ "cursor": "grab" }} className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"

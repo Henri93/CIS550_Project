@@ -37,7 +37,7 @@ export default class Reccomendations extends React.Component {
                 <div className="floater">
                     <p className="recTitle">{this.state.username}, based on your activity, we reccomend you check out the following people:</p>
                     <br></br>
-                    <div class="container">
+                    <div style={{"marginBottom":"5vw"}} class="container">
                         <div class="row">
 
                             {this.state.reccomendationsProfiles.map(profile => (
@@ -48,7 +48,7 @@ export default class Reccomendations extends React.Component {
                                         </div>
                                         <div class="card-body">
                                             <p class="card-text"><b>{profile}</b> was reccomended because of your reviews!</p>
-                                            <button style={{"backgroundColor":"orange", "color":"white"}}type="button" class="btn btn-warning">Go to</button>
+                                            <a style={{"backgroundColor":"orange", "color":"white"}}type="button" class="btn btn-warning" href = {"/profile/" + profile} >Go to {profile + "'s"}  profile</a>
                                         </div>
                                     </div>
                                 </div>
