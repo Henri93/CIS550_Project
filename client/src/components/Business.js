@@ -22,7 +22,6 @@ export default class Business extends React.Component {
         this.state = {
             business: {},
             reviews: [],
-            anyt: [1, 2, 3, 4, 5, 6, 7],
             limiter: 2,
             hideLoadMore: false
         };
@@ -49,17 +48,15 @@ export default class Business extends React.Component {
             .then(data => {
                 if (data.success) {
                     //successful
-                    console.log(data.business)
                     var bizInitial = data.business.name.toUpperCase()[0];
-                    var categories = data.business.categories.replace(";", " ");
+                    var categories = data.business.categories.replace(/\;/g, " •\xa0");
                     this.setState({
                         business: data.business,
                         bizInitial: bizInitial,
-                        categories: categories
+                        categories: categories,
                     });
 
 
-                    console.log(bizInitial);
                 } else {
                     //display error msg
                     console.log("Fail to load business info")
@@ -94,6 +91,7 @@ export default class Business extends React.Component {
             })
 
 
+          
 
 
     }
@@ -134,13 +132,15 @@ export default class Business extends React.Component {
                     />
                     <p className="numberOfReviews">{this.state.business.review_count} Reviews</p>
                     <p className="cats">{this.state.categories}</p>
-                    <a href={"/review/" + this.state.business.business_id} type="button" className="reviewBut btn btn-outline-warning">Leave a review</a>
-                    <hr className="pageBreak"></hr>
+                    <a href={"/review/" + this.state.business.business_id} id="reviewBut"   type="button" className="btn btn-outline-warning">Leave a review</a>
+
+                    <hr className="pageBreakTop"></hr>
                     <h2>Location</h2>
                     <br></br>
-                    <div className="card" style={{ "margin": "auto", "width": "25vw" }}>
-                        <div style={{ "height": "14vw" }} className="card-header">
-                            {<MapWrapped
+                    <div className="card" style={{ "margin": "auto", "width": "45vh" }}>
+                        <div style={{ "height": "30vh" }} className="card-header">
+                            {this.state.business.latitude != null && 
+                            <MapWrapped
                                 googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAi8On2sh9wpXhquXfaDcdpMl_JmDbhBO0`}
                                 loadingElement={<div style={{ height: `100%` }} />}
                                 containerElement={<div style={{ height: `100%` }} />}
@@ -158,7 +158,7 @@ export default class Business extends React.Component {
                     <hr className="pageBreak"></hr>
                     <h2>Reviews</h2>
                     <div className="tableDiv">
-                        <table cellSpacing="0" cellPadding="0" style={{ "margin": "auto", "marginLeft": "15%", "marginTop": "1vw", "width": "80%", "wordBreak": "break-all" }} class="table table-bordered">
+                        <table cellSpacing="0" cellPadding="0" style={{ "margin": "auto", "marginLeft": "15%", "marginTop": "1vw", "width": "80%", "wordBreak": "break-all" }} className="table table-bordered">
                             <tbody>
                                 {this.state.reviews.slice(0, this.state.limiter).map(review => (
                                     <tr>

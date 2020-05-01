@@ -81,6 +81,7 @@ html,body{
 
 .cats{
     font-size: 1.2em;
+    color:#505050	;
 }
 
 
@@ -97,6 +98,14 @@ html,body{
     
 }
 
+
+.pageBreakTop{
+    width: 20vw;
+    margin-top: 2.1vw;
+    border-top: 1px solid #8c8b8b; 
+
+    
+}
 .newPageBreak{
     width: 20vw;
     margin-top: 1.3vw;
@@ -153,5 +162,10 @@ html,body{
     color:white;
     background-color: orange;
     margin-bottom: 3vw;
-
 }
+
+    #reviewBut {
+        color:white;
+        background-color: orange;
+    
+    }
