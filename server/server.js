@@ -12,6 +12,7 @@ const app = express();
 // add routes
 var user = require('./routes/user')
 var business = require('./routes/business')
+var recommendations = require('./routes/recommendations')
 
 // set our port to either a predetermined port number if you have set it up, or 3000
 // now we should configure the API to use bodyParser and look for JSON data in the request body
@@ -37,6 +38,7 @@ app.get('/getBusinessesInfo', business.getBusinessInfo);
 app.get('/getReviews', business.getReviewsForBusiness);
 app.use('/submitReview', business.submitReview);
 
+app.get('/reccomendations/:userid', recommendations.getFriendRecs);
 app.get('/api', (req,res) => {
   //dummy route to test serving data to frontend
   var list = ["item1", "item2", "item3"];

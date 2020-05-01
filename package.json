@@ -16,7 +16,9 @@
     "mongoose": "^5.9.9",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "react-autocomplete": "^1.8.1",
+    "react-cookie": "^4.0.3"
   },
   "scripts": {
     "start:server": "cd server && nodemon server.js --exec babel-node --presets es2015,stage-0",

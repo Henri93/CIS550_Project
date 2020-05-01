@@ -236,6 +236,47 @@ var myDB_submitReviewForBusiness = function(data, route_callbck){
     });
 }
 
+var myDB_getFriendRecs = function(userid, route_callbck){
+
+    if(userid === ""){
+        route_callbck(null, "Please fill in user_id!");
+    }
+
+    console.log("in db with userid" + userid);
+  //  username = "JJ-aSuM4pCFPdkfoZ34q0Q";
+      con.query(`SELECT f.friends, u.name, f.reason FROM 
+                (
+                    (SELECT f2.friends, 'was recommended because you have mutual friends' as reason FROM Friends f1 JOIN Friends f2 ON f1.friends=f2.user_id 
+                        WHERE f1.user_id<>f2.friends AND f1.user_id='${userid}' LIMIT 3)
+                    UNION
+                    (SELECT business_review.user_id as friends, 'was recommended because they have similar opinions on businesses you have reviewed' as reason FROM
+                        (SELECT * FROM Reviews WHERE user_id='${userid}') user_review
+                    JOIN
+                        (SELECT * FROM Reviews r1 WHERE r1.user_id<>'${userid}' AND r1.business_id IN (SELECT DISTINCT r2.business_id FROM Reviews r2 WHERE r2.user_id='${userid}')) business_review
+                    ON
+                    user_review.business_id=business_review.business_id 
+                    WHERE (business_review.stars BETWEEN user_review.stars-1 AND user_review.stars+1)
+                    ORDER BY business_review.useful, business_review.funny, business_review.cool
+                    LIMIT 3)
+                ) f 
+                JOIN Users u ON 
+                f.friends=u.user_id ;`,  function(err, result, fields) {
+        if (err){
+            console.log("Lookup error");
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result && Array.isArray(result) && result.length > 0){
+            //return list
+            console.log(result);
+            route_callbck(result, null);
+        }
+        else{
+            console.log("something else is wrong?");
+        }
+    });
+}
+
 var database = {
     validateLogin: myDB_validateLogin,
     createAccount: myDB_createAccount,
@@ -244,7 +285,8 @@ var database = {
     getBusinessForArea: myDB_getBusinessForArea,
     getBusinessInfo: myDB_getBusinessInfo,
     getReviewsForBusiness: myDB_getReviewsForBusiness,
-    submitReviewForBusiness: myDB_submitReviewForBusiness
+    submitReviewForBusiness: myDB_submitReviewForBusiness,
+    getFriendRecs: myDB_getFriendRecs
   };
   
   module.exports = database;
