@@ -285,10 +285,10 @@ var myDB_getFriendRecs = function(userid, route_callbck){
   //  username = "JJ-aSuM4pCFPdkfoZ34q0Q";
       con.query(`SELECT f.friends, u.name, f.reason FROM 
                 (
-                    (SELECT f2.friends, 'was recommended because you have mutual friends' as reason FROM Friends f1 JOIN Friends f2 ON f1.friends=f2.user_id 
+                    (SELECT f2.friends, CONCAT('was recommended because you both are friends with ', (SELECT name from Users WHERE user_id=f1.friends)) as reason FROM Friends f1 JOIN Friends f2 ON f1.friends=f2.user_id 
                         WHERE f1.user_id<>f2.friends AND f1.user_id='${userid}' LIMIT 3)
                     UNION
-                    (SELECT business_review.user_id as friends, 'was recommended because they have similar opinions on businesses you have reviewed' as reason FROM
+                    (SELECT business_review.user_id as friends, CONCAT('was recommended because you both have similar opinions on ', (SELECT name from Business WHERE business_id=business_review.business_id)) as reason FROM
                         (SELECT * FROM Reviews WHERE user_id='${userid}') user_review
                     JOIN
                         (SELECT * FROM Reviews r1 WHERE r1.user_id<>'${userid}' AND r1.business_id IN (SELECT DISTINCT r2.business_id FROM Reviews r2 WHERE r2.user_id='${userid}')) business_review
