@@ -110,7 +110,8 @@ class MapCreator extends React.Component {
                 });
               }}
               icon={{
-                scaledSize: new window.google.maps.Size(25, 25)
+                url: 'https://www.pinclipart.com/picdir/big/174-1747068_vector-graphics-google-map-marker-green-clipart.png',
+                scaledSize: new window.google.maps.Size(27, 45)
               }}
             />
           )
@@ -155,7 +156,7 @@ class MapCreator extends React.Component {
   }
 }
 
-const MapWrapped = withScriptjs(withGoogleMap(MapCreator));
+export const MapWrapped = withScriptjs(withGoogleMap(MapCreator));
 
 export default function Map(props) {
   return (

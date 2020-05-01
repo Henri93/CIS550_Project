@@ -42,6 +42,26 @@ let getBusinessInfo = function(req, res, next) {
 }
 
 /*
+ * Route for returning businesses and users for search
+ */
+let getSearchResult = function(req, res, next) {
+    var term = req.query.term;
+    
+    db.getSearchResult(term, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else if(data.length > 0){
+            //serve reviews to front-end to set state
+            res.json({success: true, result: data});
+        }else{
+            //no reviews for business...might want to send a special message
+            res.json({success: true, result: []});
+        }
+      });
+}
+
+/*
  * Route for returning reviews for business
  */
 let getReviewsForBusiness = function(req, res, next) {
@@ -87,6 +107,7 @@ let submitReview = function(req, res, next) {
 module.exports = { 
     getHomeBusinesses: getHomeBusinesses,
     getBusinessInfo: getBusinessInfo,
+    getSearchResult: getSearchResult,
     getReviewsForBusiness: getReviewsForBusiness,
     submitReview: submitReview
 }

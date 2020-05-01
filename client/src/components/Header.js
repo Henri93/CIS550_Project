@@ -4,22 +4,80 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import "../style/header.css"
-import Autocomplete from 'react-autocomplete'
-import { matchCountry, getCountry } from "../utils/autocomplete"
+import Autocomplete from 'react-autocomplete';
+import { withRouter } from "react-router-dom";
 
-export default class PageNavbar extends React.Component {
+class PageNavbar extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.handleLogout = this.handleLogout.bind(this);
 		this.state = {
-			navDivs: []
+			navDivs: [],
+			searchTerm: "",
+			autocompleteData: []
 		}
+
+		//autocomplete functions
+		this.onChange = this.onChange.bind(this);
+        this.onSelect = this.onSelect.bind(this);
 	}
 
 	handleLogout(event) {
 		console.log("Handle logout")
 		cookie.remove('user', { path: '/' })
+	}
+
+	// invoked when the user types something. A delay of 200ms is
+	// already provided to avoid DDoS'ing your own servers
+	onChange(e) {
+		this.setState({
+            searchTerm: e.target.value
+        });
+
+		console.log("search " + this.state.searchTerm)
+		//Handle the remote request
+		if(this.state.searchTerm !== "" && this.state.searchTerm.length > 3){
+			
+			fetch('/getSearch?term=' + this.state.searchTerm, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						//successful
+						console.log(data.result)
+						this.setState({
+							autocompleteData: data.result
+						});
+					} else {
+						//display error msg
+						console.log("Fail to search for autocomplete!")
+					}
+				})
+		}
+	}
+
+	// called when the user clicks an option or hits enter
+	onSelect(e) {
+		let selected = this.state.autocompleteData.find(obj => {
+			return obj.id === e
+		})
+
+		console.log(this.props)
+		
+		if(selected.type === "user"){
+			//send to profile page
+			this.props.history.push('/profile/'+selected.id);
+		}else{
+			//send to business page
+			this.props.history.push('/business/'+selected.id);
+		}
+
+		return e;
 	}
 
 
@@ -60,22 +118,20 @@ export default class PageNavbar extends React.Component {
 						{this.state.hide_map &&
 							<form className="form-inline md-form mr-auto" style={{ "margin": "auto" }}>
 								<Autocomplete
-									value={this.state.value}
-									inputProps={{ id: 'states-autocomplete' }}
 									wrapperStyle={{ position: 'relative', display: 'inline-block' }}
 									inputProps={{ placeholder:"Enter a restaurant, store, etc", ariaLlabel:"Search", style: { width: "20vw", marginRight: "1vw", height: "3.5vh", paddingLeft:"0.5vw"} }}
-									items={getCountry()}
 									className="form-control mr-sm-2"
 									placeholder="Enter a restaurant, store, etc"
-									getItemValue={item => item.name}
-									shouldItemRender={matchCountry}
-									onChange={(event, value) => this.setState({ value })}
-									onSelect={value => this.setState({ value })}
+									getItemValue={item => item.id}
+									value={this.state.searchTerm}
+									items={this.state.autocompleteData}
+									onChange={this.onChange}
+									onSelect={this.onSelect}
 									renderItem={(item, isHighlighted) => (
 									<div
 										style={{"fontSize":"1.3rem", "cursor":"grab"}}
 										className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-										key={item.abbr} >
+										key={item.id} >
 										{item.name}
 									</div>
 								)}
@@ -113,3 +169,5 @@ export default class PageNavbar extends React.Component {
 		);
 	}
 }
+
+export default withRouter(PageNavbar);
