@@ -10,6 +10,7 @@ export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.getFriends = this.getFriends.bind(this);
+        this.addFriend = this.addFriend.bind(this);
 
         this.state = {
             username: "",
@@ -49,6 +50,31 @@ export default class Profile extends React.Component {
         console.log(this.state.onProfile)
 
     };
+
+    addFriend(e) {
+        e.preventDefault();
+        this.setState({
+            isFriend: true
+        });
+        fetch('/addFriend', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+            },
+              body: JSON.stringify({ user_id: this.props.loggedInUser.user_id, friend_id: this.state.userProfile.user_id })
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data)
+              if(data.success) {
+                
+              }else{
+                this.setState({
+                    isFriend: false
+                });
+              }
+          });
+    }
 
     getFriends(user_id) {
         fetch('/getFriends?id=' + user_id, {
@@ -188,8 +214,8 @@ export default class Profile extends React.Component {
                         <p style={{ "display": "inline-block", "fontWeight": "100", "fontSize": "1.5em", "marginLeft": "0.3vw" }}> Reviews Left: {this.state.userProfile.review_count !== null ? this.state.userProfile.review_count : 0}</p>
                     </div>
 
-                    <a href={""} id="reviewBut3" type="button" className={this.state.isThisMe ? "hiddenBut3" : "btn btn-outline-warning"}>Send Friend Request</a>
-                    {!this.state.isThisMe &&
+                    <a onClick={this.addFriend} id="reviewBut3" type="button" className={this.state.isFriend || this.state.isThisMe ? "hiddenBut3" : "btn btn-outline-warning"}>Send Friend Request</a>
+                    {(!this.state.isFriend || !this.state.isThisMe) &&
                         <br></br>
                     }
                     <br></br>

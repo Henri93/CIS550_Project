@@ -145,7 +145,7 @@ var myDB_addFriend = function(user_id, friend_id, route_callbck){
         route_callbck(null, "No id provided for adding friends!");
     }
 
-    let friend = {user_id: user_id, friends: friends}
+    let friend = {user_id: user_id, friends: friend_id}
 
     con.query('INSERT INTO Friends SET ?', friend, function(err, result, fields) {
         if (err){

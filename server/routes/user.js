@@ -97,7 +97,7 @@ let addFriend = function(req, res, next) {
 	var user_id = req.body.user_id;
 	var friend_id = req.body.friend_id;
 	
-	db.addFriend(user_id, friend_id, name, function(data, err) {
+	db.addFriend(user_id, friend_id, function(data, err) {
 		if(data == null && err != null){
 			//error signing up
 			res.json({success: false, err: err});
