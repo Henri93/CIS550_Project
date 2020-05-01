@@ -49,6 +49,7 @@ export default class Business extends React.Component {
             .then(data => {
                 if (data.success) {
                     //successful
+                    console.log(data.business)
                     var bizInitial = data.business.name.toUpperCase()[0];
                     var categories = data.business.categories.replace(";", " ");
                     this.setState({
@@ -124,9 +125,9 @@ export default class Business extends React.Component {
 
                     <h1 className="bizTitle"> {this.state.business.name}</h1>
                     <StarRatings
-                        rating={2.43}
+                        rating={this.state.business.stars}
                         starRatedColor="orange"
-                        numberOfStars={this.state.business.stars}
+                        numberOfStars={5}
                         starDimension="25px"
                         starSpacing="2px"
                         name='rating'

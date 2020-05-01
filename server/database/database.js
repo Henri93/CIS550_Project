@@ -187,6 +187,43 @@ var myDB_getBusinessInfo = function(id, route_callbck){
 }
 
 /*
+ * Function to get business and user for search bar
+ * @Return list of objects with types
+ */
+var myDB_getSearchResult= function(term, route_callbck){
+    
+    if(term === ""){
+        route_callbck(null, "no search term!");
+    }
+
+    con.query(`SELECT u.name, u.user_id FROM Users u WHERE u.name LIKE"`+term+`%"OR u.name LIKE"% `+term+`%" ORDER BY u.review_count DESC LIMIT 5;`,  function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result){
+            con.query(`SELECT b.name, b.business_id FROM Business b WHERE b.name LIKE"`+term+`%"OR b.name LIKE"% `+term+`%";`,  function(errB, resultBus, fields) {
+                if (errB){
+                    route_callbck(null, "Database lookup error: "+err);
+                    throw (errB);
+                } 
+                if(resultBus){
+                    //return list of users and businesses
+                    var searchResult = []
+                    for(var i = 0; i < result.length; i++){
+                        searchResult.push({type: 'user', id: result[i].user_id, name: result[i].name})
+                    }
+                    for(var i = 0; i < resultBus.length; i++){
+                        searchResult.push({type: 'business', id: resultBus[i].business_id, name: resultBus[i].name})
+                    }
+                    route_callbck(searchResult, null);
+                }
+            });
+        }
+    });
+}
+
+/*
  * Function to get reviews for a business
  * @Return list of review objects
  */
@@ -245,6 +282,7 @@ var database = {
     getFriends: myDB_getFriends,
     getBusinessForArea: myDB_getBusinessForArea,
     getBusinessInfo: myDB_getBusinessInfo,
+    getSearchResult: myDB_getSearchResult,
     getReviewsForBusiness: myDB_getReviewsForBusiness,
     submitReviewForBusiness: myDB_submitReviewForBusiness
   };
