@@ -10,7 +10,7 @@ export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.getFriends = this.getFriends.bind(this);
-        
+
         this.state = {
             username: "",
             onProfile: true,
@@ -68,7 +68,7 @@ export default class Profile extends React.Component {
                         for (var i = 0; i < friends.length; i += 2) {
                             elementsToRender.push(
                                 <tr>
-                                    <td className="righter">
+                                    <td style={{ "width": "10%" }}>
                                         <div style={{ "fontSize": "3rem", }}>
                                             <p className="otherNameSpan">{friends[i].name.toUpperCase()[0]}</p>
                                         </div>
@@ -77,27 +77,27 @@ export default class Profile extends React.Component {
                                         <a href={"/profile/" + friends[i].friends} className="tableText">{friends[i].name}</a>
                                     </td>
                                     {friends[i + 1] && [
-            
-                                        <td className="righter">
+
+                                        <td style={{ "width": "10%" }}>
                                             <div style={{ "fontSize": "3rem", }}>
                                                 <p className="otherNameSpan">{friends[i + 1].name.toUpperCase()[0]}</p>
                                             </div>
                                         </td>,
-            
-                                        <td className="lefter">
+
+                                        <td style={{ "textAlign": "left" }}>
                                             <a href={"/profile/" + friends[i + 1].friends} className="tableText">{friends[i + 1].name}</a>
                                         </td>
                                     ]
                                     }
-            
+
                                 </tr>
                             );
-            
+
                         };
                     } else {
                         elementsToRender.push(
-            
-                            <h1 style={{"marginBottom":"3vw", "fontWeight":"100"}}>Looks like you don't have any friends right now: try searching for them!</h1>
+
+                            <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like you don't have any friends right now: try searching for them!</h1>
                         )
                     }
                     this.setState({ friendsListTable: elementsToRender });
@@ -111,9 +111,9 @@ export default class Profile extends React.Component {
     componentDidMount() {
         var elementsToRender = []
         elementsToRender.push(
-            <h1 style={{"marginBottom":"3vw", "fontWeight":"100"}}>Looks like you don't have any friends right now: try searching for them!</h1>
+            <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like you don't have any friends right now: try searching for them!</h1>
         )
-        
+
         this.user_id = (this.props.location.pathname.split('/')[2]);
 
         this.setState({ user_id: this.user_id, friendsListTable: elementsToRender });
@@ -145,26 +145,26 @@ export default class Profile extends React.Component {
                 this.getFriends(this.state.userProfile.user_id)
             })
 
-            //cheek if loggedInUser has this person as a friend
-            fetch('/isFriend?user_id=' + this.props.loggedInUser.user_id + "&friend_id=" + this.user_id, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
+        //cheek if loggedInUser has this person as a friend
+        fetch('/isFriend?user_id=' + this.props.loggedInUser.user_id + "&friend_id=" + this.user_id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    //successful
+                    console.log("isFriend: " + data.isFriend)
+                    this.setState({
+                        isFriend: data.isFriend
+                    });
+                } else {
+                    //display error msg
+                    console.log("Fail to check if friend!")
                 }
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        //successful
-                        console.log("isFriend: " + data.isFriend)
-                        this.setState({
-                            isFriend: data.isFriend
-                        });
-                    } else {
-                        //display error msg
-                        console.log("Fail to check if friend!")
-                    }
-                })
     }
 
 
@@ -188,6 +188,11 @@ export default class Profile extends React.Component {
                         <p style={{ "display": "inline-block", "fontWeight": "100", "fontSize": "1.5em", "marginLeft": "0.3vw" }}> Reviews Left: {this.state.userProfile.review_count !== null ? this.state.userProfile.review_count : 0}</p>
                     </div>
 
+                    <a href={""} id="reviewBut3" type="button" className={this.state.isThisMe ? "hiddenBut3" : "btn btn-outline-warning"}>Send Friend Request</a>
+                    {!this.state.isThisMe &&
+                        <br></br>
+                    }
+                    <br></br>
                     <p onClick={this.toggleVisibility} className={this.state.onProfile ? 'profPHigh' : 'profP'}>{this.state.isThisMe ? 'My' : this.state.username + "'s"} Profile</p>
                     <p onClick={this.toggleVisibility} className={this.state.onProfile ? 'compP' : 'compPHigh'}>{this.state.isThisMe ? 'My' : this.state.username + "'s"}  Friends</p>
 
