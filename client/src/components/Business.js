@@ -163,6 +163,7 @@ export default class Business extends React.Component {
                                 {this.state.reviews.slice(0, this.state.limiter).map(review => (
                                     <tr>
                                         <td className="righter">
+                                        <a href={"/profile/" + review.user_id}>
                                             <div style={{ "fontSize": "1rem", }}>
                                                 <p className="otherNameSpan2">{review.name.toUpperCase()[0]}</p>
                                                 <p className = "userInfoText"> {review.name}
@@ -173,6 +174,7 @@ export default class Business extends React.Component {
                                             </p>
 
                                             </div>
+                                            </a>
                                         </td>
                                         <td className="lefter">
                                             <StarRatings
