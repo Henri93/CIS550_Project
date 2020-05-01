@@ -136,6 +136,52 @@ var myDB_getFriends = function(id, route_callbck){
 }
 
 /*
+ * Function to add friends of a user
+ * @Return friend_id 
+ */
+var myDB_addFriend = function(user_id, friend_id, route_callbck){
+    
+    if(user_id === "" || friend_id === ""){
+        route_callbck(null, "No id provided for adding friends!");
+    }
+
+    let friend = {user_id: user_id, friends: friends}
+
+    con.query('INSERT INTO Friends SET ?', friend, function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        }
+        if (result){
+            route_callbck({ user_id : user_id, friend_id : friend_id}, null);
+        } 
+    });
+}
+
+/*
+ * Function to determine if user is a friend
+ * @Return friend_id 
+ */
+var myDB_isFriend = function(user_id, friend_id, route_callbck){
+    
+    if(user_id === "" || friend_id === ""){
+        route_callbck(null, "No id provided for isFriend!");
+    }
+
+    con.query(`SELECT * FROM Friends f WHERE f.user_id="`+user_id+`" AND f.friends="`+friend_id+`";`, function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        }
+        if (result && Array.isArray(result) && result.length > 0){
+            route_callbck(true, null);
+        }else{
+            route_callbck(false, null);
+        }
+    });
+}
+
+/*
  * Function to get businesses to display on map for an area
  * @Return list of business objects
  */
@@ -321,6 +367,8 @@ var database = {
     createAccount: myDB_createAccount,
     getProfileInfo: myDB_getProfileInfo,
     getFriends: myDB_getFriends,
+    addFriend: myDB_addFriend,
+    isFriend: myDB_isFriend,
     getBusinessForArea: myDB_getBusinessForArea,
     getBusinessInfo: myDB_getBusinessInfo,
     getSearchResult: myDB_getSearchResult,

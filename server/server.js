@@ -30,6 +30,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/login', user.login);
 app.get('/getProfile', user.getProfile);
 app.get('/getFriends', user.getFriends);
+app.get('/isFriend', user.isFriend);
+app.use('/addFriend', user.addFriend);
 app.use('/signup', user.signup);
 
 /* Routes involving Businesses */

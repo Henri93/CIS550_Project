@@ -14,6 +14,7 @@ export default class Profile extends React.Component {
         this.state = {
             username: "",
             onProfile: true,
+            isFriend: false,
             loggedInUserUserId: props.loggedInUser.user_id,
             userProfile: {},
             names: ["compliment_cool", "compliment_hot"
@@ -143,6 +144,27 @@ export default class Profile extends React.Component {
                 //then get friends after load profile
                 this.getFriends(this.state.userProfile.user_id)
             })
+
+            //cheek if loggedInUser has this person as a friend
+            fetch('/isFriend?user_id=' + this.props.loggedInUser.user_id + "&friend_id=" + this.user_id, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        //successful
+                        console.log("isFriend: " + data.isFriend)
+                        this.setState({
+                            isFriend: data.isFriend
+                        });
+                    } else {
+                        //display error msg
+                        console.log("Fail to check if friend!")
+                    }
+                })
     }
 
 
