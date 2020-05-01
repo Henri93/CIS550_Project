@@ -187,6 +187,43 @@ var myDB_getBusinessInfo = function(id, route_callbck){
 }
 
 /*
+ * Function to get business and user for search bar
+ * @Return list of objects with types
+ */
+var myDB_getSearchResult= function(term, route_callbck){
+    
+    if(term === ""){
+        route_callbck(null, "no search term!");
+    }
+
+    con.query(`SELECT u.name, u.user_id FROM Users u WHERE u.name LIKE"`+term+`%"OR u.name LIKE"% `+term+`%" ORDER BY u.review_count DESC LIMIT 5;`,  function(err, result, fields) {
+        if (err){
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result){
+            con.query(`SELECT b.name, b.business_id FROM Business b WHERE b.name LIKE"`+term+`%"OR b.name LIKE"% `+term+`%";`,  function(errB, resultBus, fields) {
+                if (errB){
+                    route_callbck(null, "Database lookup error: "+err);
+                    throw (errB);
+                } 
+                if(resultBus){
+                    //return list of users and businesses
+                    var searchResult = []
+                    for(var i = 0; i < result.length; i++){
+                        searchResult.push({type: 'user', id: result[i].user_id, name: result[i].name})
+                    }
+                    for(var i = 0; i < resultBus.length; i++){
+                        searchResult.push({type: 'business', id: resultBus[i].business_id, name: resultBus[i].name})
+                    }
+                    route_callbck(searchResult, null);
+                }
+            });
+        }
+    });
+}
+
+/*
  * Function to get reviews for a business
  * @Return list of review objects
  */
@@ -197,7 +234,7 @@ var myDB_getReviewsForBusiness = function(id, route_callbck){
     }
 
     //query db for reviews
-    con.query(`SELECT * FROM Reviews r JOIN Users u ON r.user_id = u.user_id WHERE r.business_id="`+id.id+`" ORDER BY r.date DESC LIMIT 10;`,  function(err, result, fields) {
+    con.query(`SELECT * FROM Reviews r JOIN Users u ON r.user_id = u.user_id WHERE r.business_id="`+id.id+`" ORDER BY r.date DESC;`,  function(err, result, fields) {
         if (err){
             route_callbck(null, "Database lookup error: "+err);
             throw (err);
@@ -219,19 +256,21 @@ var myDB_submitReviewForBusiness = function(data, route_callbck){
         route_callbck(null, "Please provide a enough info for a review!");
     }
 
-    let date = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    let review = {user_id: data.user_id, business_id: data.business_id, rating: data.rating, text: data.reviewText, date: date, useful: 0, funny: 0, cool: 0}
+    /* https://stackoverflow.com/questions/10830357/javascript-toisostring-ignores-timezone-offset */
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+    var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+
+    let review_id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    let review = {review_id: review_id, user_id: data.user_id, business_id: data.business_id, stars: data.rating, text: data.reviewText, date: localISOTime, useful: 0, funny: 0, cool: 0}
     console.log("submitting review: " + JSON.stringify(review))
-    
-    // //UNCOMMENT THIS WHEN REVIEWS TABLE EXISTS
-    // route_callbck(null, "Reviews table is missing!");
+
     con.query('INSERT INTO Reviews SET ?', review, function(err, result, fields) {
         if (err){
             route_callbck(null, "Database lookup error: "+err);
             throw (err);
         }
         if (result){
-            route_callbck({ rating : data.rating, reviewText : data.reviewText}, null);
+            route_callbck([{ rating : data.rating, reviewText : data.reviewText}], null);
         } 
     });
 }
@@ -284,6 +323,7 @@ var database = {
     getFriends: myDB_getFriends,
     getBusinessForArea: myDB_getBusinessForArea,
     getBusinessInfo: myDB_getBusinessInfo,
+    getSearchResult: myDB_getSearchResult,
     getReviewsForBusiness: myDB_getReviewsForBusiness,
     submitReviewForBusiness: myDB_submitReviewForBusiness,
     getFriendRecs: myDB_getFriendRecs

@@ -37,6 +37,7 @@ app.get('/getHomeBusinesses', business.getHomeBusinesses);
 app.get('/getBusinessesInfo', business.getBusinessInfo);
 app.get('/getReviews', business.getReviewsForBusiness);
 app.use('/submitReview', business.submitReview);
+app.get('/getSearch', business.getSearchResult);
 
 app.get('/reccomendations/:userid', recommendations.getFriendRecs);
 app.get('/api', (req,res) => {
