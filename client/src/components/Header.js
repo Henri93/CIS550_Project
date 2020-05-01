@@ -132,7 +132,9 @@ class PageNavbar extends React.Component {
 										style={{"fontSize":"1.3rem", "cursor":"grab"}}
 										className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
 										key={item.id} >
-										{item.name}
+											<p className="typeIcon">{item.type.toUpperCase()[0]}</p>
+											<p className = "resultText">{item.name}</p>
+										
 									</div>
 								)}
 								/>

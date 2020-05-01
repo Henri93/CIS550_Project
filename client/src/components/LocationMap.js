@@ -20,7 +20,7 @@ class LocationMap extends Component {
 
 
     render() {
-        console.log(typeof this.props.long);
+        
 
         return (
             <GoogleMap
@@ -40,6 +40,7 @@ class LocationMap extends Component {
 
             </GoogleMap>
         );
+                    
     }
 }
 
