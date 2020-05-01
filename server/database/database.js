@@ -219,9 +219,12 @@ var myDB_submitReviewForBusiness = function(data, route_callbck){
         route_callbck(null, "Please provide a enough info for a review!");
     }
 
-    let date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    /* https://stackoverflow.com/questions/10830357/javascript-toisostring-ignores-timezone-offset */
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+    var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+
     let review_id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    let review = {review_id: review_id, user_id: data.user_id, business_id: data.business_id, stars: data.rating, text: data.reviewText, date: date, useful: 0, funny: 0, cool: 0}
+    let review = {review_id: review_id, user_id: data.user_id, business_id: data.business_id, stars: data.rating, text: data.reviewText, date: localISOTime, useful: 0, funny: 0, cool: 0}
     console.log("submitting review: " + JSON.stringify(review))
 
     con.query('INSERT INTO Reviews SET ?', review, function(err, result, fields) {
