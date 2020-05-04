@@ -23,7 +23,8 @@
   "scripts": {
     "start:server": "cd server && nodemon server.js --exec babel-node --presets es2015,stage-0",
     "start:client": "cd client && npm install && yarn start",
-    "start": "concurrently \"yarn start:server\" \"yarn start:client\""
+    "build:client": "cd client && npm install && npm build",
+    "start": "concurrently \"yarn start:server\" \"yarn build:client\""
   },
   "eslintConfig": {
     "extends": "react-app"
