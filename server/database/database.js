@@ -362,6 +362,43 @@ var myDB_getFriendRecs = function(userid, route_callbck){
     });
 }
 
+var myDB_getPlacesRecs = function(userid, route_callbck){
+
+    if(userid === ""){
+        route_callbck(null, "Please fill in user_id!");
+    }
+
+    console.log("in db with userid" + userid);
+  //  username = "JJ-aSuM4pCFPdkfoZ34q0Q";
+      con.query(`SELECT b.business_id as business, b.name, CONCAT('because ', (SELECT name FROM Users WHERE user_id=f_reviews.friends), ' likes this place') as reason 
+                        FROM Business b
+                        JOIN
+                            (
+                            SELECT * FROM Reviews r 
+                            JOIN 
+                            (SELECT friends FROM Friends WHERE user_id='test@test.com') f 
+                            ON r.user_id=f.friends 
+                            WHERE r.stars>=4 
+                            ORDER BY r.stars, r.useful, r.funny, r.cool DESC 
+                            LIMIT 6
+                            ) f_reviews
+                        ON b.business_id=f_reviews.business_id;`,  function(err, result, fields) {
+        if (err){
+            console.log("Lookup error");
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result && Array.isArray(result) && result.length > 0){
+            //return list
+            console.log(result);
+            route_callbck(result, null);
+        }
+        else{
+            console.log("something else is wrong?");
+        }
+    });
+}
+
 var database = {
     validateLogin: myDB_validateLogin,
     createAccount: myDB_createAccount,
@@ -374,7 +411,8 @@ var database = {
     getSearchResult: myDB_getSearchResult,
     getReviewsForBusiness: myDB_getReviewsForBusiness,
     submitReviewForBusiness: myDB_submitReviewForBusiness,
-    getFriendRecs: myDB_getFriendRecs
+    getFriendRecs: myDB_getFriendRecs,
+    getPlacesRecs: myDB_getPlacesRecs
   };
   
   module.exports = database;
