@@ -23,7 +23,7 @@
   "scripts": {
     "start:server": "cd server && nodemon server.js --exec babel-node --presets es2015,stage-0",
     "start:client": "cd client && npm install && yarn start",
-    "build:client": "cd client && npm install && npm build",
+    "build:client": "cd client && npm install && yarn build",
     "start": "concurrently \"yarn start:server\" \"yarn build:client\""
   },
   "eslintConfig": {
