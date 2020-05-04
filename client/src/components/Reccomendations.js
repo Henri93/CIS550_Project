@@ -78,7 +78,7 @@ export default class Reccomendations extends React.Component {
 
 
                     <div className={this.state.onProfile ? 'profileArea' : 'hidden'}>
-                        <p className="recTitle">{this.state.username}, based on your activity, we reccomend you check out the following people:</p>
+                        <p className="recTitle">{this.state.username}, based on your activity, we reccomend you check out the following <b style={{"color":"orange"}}>people</b>:</p>
                         <br></br>
                         <div style={{ "marginBottom": "5vw" }} class="container">
                             <div class="row">
@@ -106,7 +106,7 @@ export default class Reccomendations extends React.Component {
 
                     <div className={this.state.onProfile ? 'hidden' : 'compArea'}>
 
-                        <p className="recTitle">{this.state.username}, based on your activity, we reccomend you check out the following people:</p>
+                        <p className="recTitle">{this.state.username}, based on your activity, we reccomend you check out the following <b style={{"color":"orange"}}>places</b>:</p>
                         <br></br>
                         <div style={{ "marginBottom": "5vw" }} class="container">
                             <div class="row">
