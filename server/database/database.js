@@ -376,7 +376,7 @@ var myDB_getPlacesRecs = function(userid, route_callbck){
                             (
                             SELECT * FROM Reviews r 
                             JOIN 
-                            (SELECT friends FROM Friends WHERE user_id='test@test.com') f 
+                            (SELECT friends FROM Friends WHERE user_id='${userid}') f 
                             ON r.user_id=f.friends 
                             WHERE r.stars>=4 
                             ORDER BY r.stars, r.useful, r.funny, r.cool DESC 
