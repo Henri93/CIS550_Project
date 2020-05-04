@@ -42,6 +42,7 @@ app.use('/submitReview', business.submitReview);
 app.get('/getSearch', business.getSearchResult);
 
 app.get('/reccomendations/:userid', recommendations.getFriendRecs);
+app.get('/reccomendations_p/:userid', recommendations.getPlacesRecs);
 app.get('/api', (req,res) => {
   //dummy route to test serving data to frontend
   var list = ["item1", "item2", "item3"];

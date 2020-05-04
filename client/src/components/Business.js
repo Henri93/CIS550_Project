@@ -166,7 +166,7 @@ export default class Business extends React.Component {
                                         <a href={"/profile/" + review.user_id}>
                                             <div style={{ "fontSize": "1rem", }}>
                                                 <p className="otherNameSpan2">{review.name.toUpperCase()[0]}</p>
-                                                <p className = "userInfoText"> {review.name}
+                                                <p className = "userInfoText"> <b className = "nameText3" >{review.name}</b>
                                                     <br></br>
                                                     {review.review_count} Reviews
                                             <br></br>

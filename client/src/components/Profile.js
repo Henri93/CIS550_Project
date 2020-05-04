@@ -10,6 +10,7 @@ export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.getFriends = this.getFriends.bind(this);
+        this.addFriend = this.addFriend.bind(this);
 
         this.state = {
             username: "",
@@ -49,6 +50,31 @@ export default class Profile extends React.Component {
         console.log(this.state.onProfile)
 
     };
+
+    addFriend(e) {
+        e.preventDefault();
+        this.setState({
+            isFriend: true
+        });
+        fetch('/addFriend', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_id: this.props.loggedInUser.user_id, friend_id: this.state.userProfile.user_id })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if (data.success) {
+
+                } else {
+                    this.setState({
+                        isFriend: false
+                    });
+                }
+            });
+    }
 
     getFriends(user_id) {
         fetch('/getFriends?id=' + user_id, {
@@ -95,10 +121,16 @@ export default class Profile extends React.Component {
 
                         };
                     } else {
-                        elementsToRender.push(
+                        if (this.state.isThisMe) {
+                            elementsToRender.push(
+                                <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like you don't have any friends right now: try searching for them!</h1>
+                            )
+                        } else {
+                            elementsToRender.push(
+                            <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like this {this.state.username} doesn't have any friends right now....</h1>
+                            )
 
-                            <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like you don't have any friends right now: try searching for them!</h1>
-                        )
+                        }
                     }
                     this.setState({ friendsListTable: elementsToRender });
                 } else {
@@ -109,15 +141,24 @@ export default class Profile extends React.Component {
     }
 
     componentDidMount() {
-        var elementsToRender = []
-        elementsToRender.push(
-            <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like you don't have any friends right now: try searching for them!</h1>
-        )
+
 
         this.user_id = (this.props.location.pathname.split('/')[2]);
 
         this.setState({ user_id: this.user_id, friendsListTable: elementsToRender });
         this.setState({ isThisMe: this.state.loggedInUserUserId == this.user_id });
+
+        var elementsToRender = []
+        if (this.state.isThisMe) {
+            elementsToRender.push(
+                <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like you don't have any friends right now: try searching for them!</h1>
+            )
+        } else {
+            elementsToRender.push(
+            <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like this {this.state.username} doesn't have any friends right now....</h1>
+            )
+
+        }
 
         //get profile informatons
         fetch('/getProfile?id=' + this.user_id, {
@@ -188,8 +229,8 @@ export default class Profile extends React.Component {
                         <p style={{ "display": "inline-block", "fontWeight": "100", "fontSize": "1.5em", "marginLeft": "0.3vw" }}> Reviews Left: {this.state.userProfile.review_count !== null ? this.state.userProfile.review_count : 0}</p>
                     </div>
 
-                    <a href={""} id="reviewBut3" type="button" className={this.state.isThisMe ? "hiddenBut3" : "btn btn-outline-warning"}>Send Friend Request</a>
-                    {!this.state.isThisMe &&
+                    <a onClick={this.addFriend} id="reviewBut3" type="button" className={this.state.isFriend || this.state.isThisMe ? "hiddenBut3" : "btn btn-outline-warning"}>Send Friend Request</a>
+                    {(!this.state.isFriend || !this.state.isThisMe) &&
                         <br></br>
                     }
                     <br></br>

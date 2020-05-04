@@ -12,6 +12,10 @@ const con = mysql.createConnection({
 con.connect(function(err) {
     if (err) throw err;
     console.log("Connected to DB!");
+    // con.query("CREATE INDEX i1 ON Users(user_id);")
+    // con.query("CREATE INDEX i2 ON Business(business_id);")
+    // con.query("CREATE INDEX i3 ON Reviews(review_id);")
+
 });
 
 /*
@@ -145,7 +149,7 @@ var myDB_addFriend = function(user_id, friend_id, route_callbck){
         route_callbck(null, "No id provided for adding friends!");
     }
 
-    let friend = {user_id: user_id, friends: friends}
+    let friend = {user_id: user_id, friends: friend_id}
 
     con.query('INSERT INTO Friends SET ?', friend, function(err, result, fields) {
         if (err){
@@ -280,7 +284,7 @@ var myDB_getReviewsForBusiness = function(id, route_callbck){
     }
 
     //query db for reviews
-    con.query(`SELECT * FROM Reviews r JOIN Users u ON r.user_id = u.user_id WHERE r.business_id="`+id.id+`" ORDER BY r.date DESC;`,  function(err, result, fields) {
+    con.query(`SELECT * FROM (SELECT * FROM Reviews r WHERE r.business_id="`+id.id+`") temp JOIN Users u ON temp.user_id = u.user_id ORDER BY temp.date DESC;`,  function(err, result, fields) {
         if (err){
             route_callbck(null, "Database lookup error: "+err);
             throw (err);
@@ -362,6 +366,43 @@ var myDB_getFriendRecs = function(userid, route_callbck){
     });
 }
 
+var myDB_getPlacesRecs = function(userid, route_callbck){
+
+    if(userid === ""){
+        route_callbck(null, "Please fill in user_id!");
+    }
+
+    console.log("in db with userid" + userid);
+  //  username = "JJ-aSuM4pCFPdkfoZ34q0Q";
+      con.query(`SELECT b.business_id as business, b.name, CONCAT('because ', (SELECT name FROM Users WHERE user_id=f_reviews.friends), ' likes this place') as reason 
+                        FROM Business b
+                        JOIN
+                            (
+                            SELECT * FROM Reviews r 
+                            JOIN 
+                            (SELECT friends FROM Friends WHERE user_id='${userid}') f 
+                            ON r.user_id=f.friends 
+                            WHERE r.stars>=4 
+                            ORDER BY r.stars, r.useful, r.funny, r.cool DESC 
+                            LIMIT 6
+                            ) f_reviews
+                        ON b.business_id=f_reviews.business_id;`,  function(err, result, fields) {
+        if (err){
+            console.log("Lookup error");
+            route_callbck(null, "Database lookup error: "+err);
+            throw (err);
+        } 
+        if(result && Array.isArray(result) && result.length > 0){
+            //return list
+            console.log(result);
+            route_callbck(result, null);
+        }
+        else{
+            console.log("something else is wrong?");
+        }
+    });
+}
+
 var database = {
     validateLogin: myDB_validateLogin,
     createAccount: myDB_createAccount,
@@ -374,7 +415,8 @@ var database = {
     getSearchResult: myDB_getSearchResult,
     getReviewsForBusiness: myDB_getReviewsForBusiness,
     submitReviewForBusiness: myDB_submitReviewForBusiness,
-    getFriendRecs: myDB_getFriendRecs
+    getFriendRecs: myDB_getFriendRecs,
+    getPlacesRecs: myDB_getPlacesRecs
   };
   
   module.exports = database;
