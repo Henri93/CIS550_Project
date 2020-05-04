@@ -161,7 +161,7 @@ export default class Reccomendations extends React.Component {
                                             </div>
                                             <div class="card-body">
                                                 <p class="card-text"><b>{profile}</b> {this.state.mapToReasonPlaces[profile]}</p>
-                                                <a style={{ "backgroundColor": "orange", "color": "white" }} type="button" class="btn btn-warning" href={"/getBusinessesInfo?id=" + this.state.mapToProfilesIdPlaces[profile]} >Go to {profile + "'s"}  page</a>
+                                                <a style={{ "backgroundColor": "orange", "color": "white" }} type="button" class="btn btn-warning" href={"/business/" + this.state.mapToProfilesIdPlaces[profile]} >Go to {profile + "'s"}  page</a>
                                             </div>
                                         </div>
                                     </div>
