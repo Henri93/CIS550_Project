@@ -116,7 +116,7 @@ class PageNavbar extends React.Component {
 
 
 						{this.state.hide_map &&
-							<form className="form-inline md-form mr-auto" style={{ "margin": "auto" }}>
+							<form className="form-inline md-form mr-auto" style={{ "marginLeft":"25%" }}>
 								<Autocomplete
 									wrapperStyle={{ position: 'relative', display: 'inline-block' }}
 									inputProps={{ placeholder:"Enter a restaurant, store, etc", ariaLlabel:"Search", style: { width: "20vw", marginRight: "1vw", height: "3.5vh", paddingLeft:"0.5vw"} }}
