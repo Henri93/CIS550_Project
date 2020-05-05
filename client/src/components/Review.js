@@ -112,6 +112,7 @@ export default class Review extends React.Component {
                                 numberOfStars={5}
                                 starDimension="1.9rem"
                                 starSpacing="0.1rem"
+                                starHoverColor="orange"
                                 starRatedColor="orange"
 
                                 changeRating={this.changeRating}
