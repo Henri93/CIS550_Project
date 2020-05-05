@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 const con = mysql.createConnection({
     host: "cis550proj.cimxsfsxttk4.us-east-1.rds.amazonaws.com",
