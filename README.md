@@ -1,6 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#How to Run
 
 Make sure you have [yarn](https://classic.yarnpkg.com/en/docs/install/).
+
+then run 'npm run start'.
 
 ## Available Scripts
 
