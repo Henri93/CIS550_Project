@@ -1,4 +1,4 @@
-#How to Run
+# How to Run
 
 Make sure you have [yarn](https://classic.yarnpkg.com/en/docs/install/).
 
