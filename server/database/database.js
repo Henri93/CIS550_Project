@@ -12,6 +12,10 @@ const con = mysql.createConnection({
 con.connect(function(err) {
     if (err) throw err;
     console.log("Connected to DB!");
+    // con.query("CREATE INDEX i1 ON Users(user_id);")
+    // con.query("CREATE INDEX i2 ON Business(business_id);")
+    // con.query("CREATE INDEX i3 ON Reviews(review_id);")
+
 });
 
 /*
@@ -280,7 +284,7 @@ var myDB_getReviewsForBusiness = function(id, route_callbck){
     }
 
     //query db for reviews
-    con.query(`SELECT * FROM Reviews r JOIN Users u ON r.user_id = u.user_id WHERE r.business_id="`+id.id+`" ORDER BY r.date DESC;`,  function(err, result, fields) {
+    con.query(`SELECT * FROM (SELECT * FROM Reviews r WHERE r.business_id="`+id.id+`") temp JOIN Users u ON temp.user_id = u.user_id ORDER BY temp.date DESC;`,  function(err, result, fields) {
         if (err){
             route_callbck(null, "Database lookup error: "+err);
             throw (err);

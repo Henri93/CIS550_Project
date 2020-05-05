@@ -20,6 +20,13 @@ html,body{
     z-index: 3;
 }
 
+.nameText3{
+    color:orange;
+}
+.nameText3:hover {
+    color: #686868;
+}
+
 .bizFloater {
     height: auto;
     margin-top: 15%;

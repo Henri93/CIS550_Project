@@ -58,22 +58,22 @@ export default class Profile extends React.Component {
         });
         fetch('/addFriend', {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
             },
-              body: JSON.stringify({ user_id: this.props.loggedInUser.user_id, friend_id: this.state.userProfile.user_id })
-            })
+            body: JSON.stringify({ user_id: this.props.loggedInUser.user_id, friend_id: this.state.userProfile.user_id })
+        })
             .then(response => response.json())
             .then(data => {
-              console.log(data)
-              if(data.success) {
-                
-              }else{
-                this.setState({
-                    isFriend: false
-                });
-              }
-          });
+                console.log(data)
+                if (data.success) {
+
+                } else {
+                    this.setState({
+                        isFriend: false
+                    });
+                }
+            });
     }
 
     getFriends(user_id) {
@@ -121,10 +121,16 @@ export default class Profile extends React.Component {
 
                         };
                     } else {
-                        elementsToRender.push(
+                        if (this.state.isThisMe) {
+                            elementsToRender.push(
+                                <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like you don't have any friends right now: try searching for them!</h1>
+                            )
+                        } else {
+                            elementsToRender.push(
+                            <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like this {this.state.username} doesn't have any friends right now....</h1>
+                            )
 
-                            <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like you don't have any friends right now: try searching for them!</h1>
-                        )
+                        }
                     }
                     this.setState({ friendsListTable: elementsToRender });
                 } else {
@@ -135,15 +141,24 @@ export default class Profile extends React.Component {
     }
 
     componentDidMount() {
-        var elementsToRender = []
-        elementsToRender.push(
-            <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like you don't have any friends right now: try searching for them!</h1>
-        )
+
 
         this.user_id = (this.props.location.pathname.split('/')[2]);
 
         this.setState({ user_id: this.user_id, friendsListTable: elementsToRender });
         this.setState({ isThisMe: this.state.loggedInUserUserId == this.user_id });
+
+        var elementsToRender = []
+        if (this.state.isThisMe) {
+            elementsToRender.push(
+                <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like you don't have any friends right now: try searching for them!</h1>
+            )
+        } else {
+            elementsToRender.push(
+            <h1 style={{ "marginBottom": "3vw", "fontWeight": "100" }}>Looks like this {this.state.username} doesn't have any friends right now....</h1>
+            )
+
+        }
 
         //get profile informatons
         fetch('/getProfile?id=' + this.user_id, {
