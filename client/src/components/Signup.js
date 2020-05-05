@@ -70,12 +70,12 @@ export default function Signup(props) {
             />
           </FormGroup>
           <Button style={{ backgroundColor: "orange", borderColor: "orange" }} block type="submit">
-            Login
+            Submit
         </Button>
 
         </form>
         <div className = "pStyle">
-        <a  className = "aStl" href = "login">Create account!</a>
+        <a  className = "aStl" href = "login">Back to login!</a>
       </div>
       </div>
       
