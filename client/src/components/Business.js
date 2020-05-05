@@ -141,7 +141,7 @@ export default class Business extends React.Component {
                         <div style={{ "height": "30vh" }} className="card-header">
                             {this.state.business.latitude != null && 
                             <MapWrapped
-                                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
+                                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAXNiAH94EQfPSSHUJRZoPJ5h9bmBx0gp8`}
                                 loadingElement={<div style={{ height: `100%` }} />}
                                 containerElement={<div style={{ height: `100%` }} />}
                                 mapElement={<div style={{ height: `100%` }} />}
@@ -158,7 +158,7 @@ export default class Business extends React.Component {
                     <hr className="pageBreak"></hr>
                     <h2>Reviews</h2>
                     <div className="tableDiv">
-                        <table cellSpacing="0" cellPadding="0" style={{ "margin": "auto", "marginLeft": "15%", "marginTop": "1vw", "width": "80%", "wordBreak": "break-all" }} className="table table-bordered">
+                        <table cellSpacing="0" cellPadding="0" style={{ "margin": "auto", "marginLeft": "15%", "marginTop": "1vw", "width": "80%" }} className="table table-bordered">
                             <tbody>
                                 {this.state.reviews.slice(0, this.state.limiter).map(review => (
                                     <tr>

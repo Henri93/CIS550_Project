@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../style/signup.css"
+import cookie from 'react-cookies'
 
 export default function Signup(props) {
   const [email, setEmail] = useState("");
@@ -26,7 +27,8 @@ export default function Signup(props) {
         console.log(data)
         if(data.success) {
           //successful signup so redirect to homepage
-          props.onLogin(data); 
+          //props.onLogin(data); 
+          cookie.save('user', data.res, { path: '/' })
           history.push("/");
         }else{
           //display error signup msg
@@ -70,12 +72,12 @@ export default function Signup(props) {
             />
           </FormGroup>
           <Button style={{ backgroundColor: "orange", borderColor: "orange" }} block type="submit">
-            Login
+            Submit
         </Button>
 
         </form>
         <div className = "pStyle">
-        <a  className = "aStl" href = "login">Create account!</a>
+        <a  className = "aStl" href = "login">Back to login!</a>
       </div>
       </div>
       
