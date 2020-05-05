@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import cookie from 'react-cookies'
 import "../style/login.css"
 
-export default function Login() {
+export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
@@ -25,6 +26,7 @@ export default function Login() {
         console.log(data)
         if(data.success) {
           //successful login so redirect to homepage
+          cookie.save('user', data.res, { path: '/' })
           history.push("/");
         }else{
           //display error login msg
@@ -40,7 +42,7 @@ export default function Login() {
   return (
     <div className="Login">
       <div className="nicerLog">
-        <h1 className="h1-center">Yelp</h1>
+        <h1 className="h1-center">ꟻF</h1>
         {/* <div class="diamond-shape">
           <div class="item-count">99</div>
         </div> */}

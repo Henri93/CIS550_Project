@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from "react";
 import {
 	BrowserRouter as Router,
 	Route,
@@ -11,9 +11,14 @@ import Signup from './Signup';
 import Profile from './Profile';
 import Business from './Business';
 import Review from './Review';
+import ProtectedRoute from './ProtectedRoute';
 import Reccomendations from './Reccomendations';
 
 export default class App extends React.Component {
+
+	constructor(props) {
+		super(props);
+	}
 
 	render() {
 		return (
@@ -21,60 +26,26 @@ export default class App extends React.Component {
 				<Router>
 					<Switch>
 						<Route
-							exact
-							path="/"
+							path="/login"
 							render={() => (
-								<Map />
+								<Login />
 							)}
 						/>
-						<Route
-							exact
-							path="/Map"
-							render={() => (
-								<Redirect to = "/" />
-							)}
-						/>
-						<Route
-								path="/login"
-								render={() => (
-									<Login />
-								)}
-							/>
-							<Route
-								path="/signup"
-								render={() => (
-									<Signup />
-								)}
-							/>
-							<Route
-								path="/profile/:name"
-								component={Profile}
 
-								render={() => (
-									<Profile />
-								)}
-							/>
-							<Route
-								path="/business/:businessname"
-								component={Business}
-								render={() => (
-									<Business />
-								)}
-							/>
-							<Route
-								path="/review/:businessname"
-								component={Review}
-								render={() => (
-									<Review />
-								)}
-							/>
-							<Route
-								path="/reccomendations/:name"
-								component={Reccomendations}
-								render={() => (
-									<Reccomendations />
-								)}
-							/>
+						<Route
+							path="/signup"
+							render={() => (
+								<Signup />
+							)}
+						/>
+
+						<ProtectedRoute exact path='/' component={Map} />
+						<ProtectedRoute exact path='/profile/:name' component={Profile} />
+						<ProtectedRoute exact path='/business/:businessname' component={Business} />
+						<ProtectedRoute exact path='/review/:businessname' component={Review} />
+						<ProtectedRoute exact path='/reccomendations/:userid' component={Reccomendations } />
+						<ProtectedRoute exact path='*' component={Map} />
+
 					</Switch>
 				</Router>
 			</div>
