@@ -43,7 +43,7 @@ export default class App extends React.Component {
 						<ProtectedRoute exact path='/profile/:name' component={Profile} />
 						<ProtectedRoute exact path='/business/:businessname' component={Business} />
 						<ProtectedRoute exact path='/review/:businessname' component={Review} />
-						<ProtectedRoute exact path='/reccomendations/:name' component={Reccomendations } />
+						<ProtectedRoute exact path='/reccomendations/:userid' component={Reccomendations } />
 						<ProtectedRoute exact path='*' component={Map} />
 
 					</Switch>

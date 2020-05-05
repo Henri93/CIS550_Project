@@ -2,3 +2,39 @@
         color:orange;
         cursor: grab;
     }
+
+    input {
+        border:1px solid #C0C0C0;
+        border-radius: 10px;
+
+
+    }
+
+    input:focus {
+        outline: none !important;
+        border:1px solid orange;
+    }
+
+    .typeIcon {
+            height: 1.6rem;
+            width:  1.6rem;
+            box-shadow:  0 0 0 2px orange;
+            position: absolute;
+            border-radius: 51%;
+            z-index: 12;
+            text-align: center;
+            font-size: 1rem;
+            color: orange;
+            margin: auto;
+            display: inline;
+            margin-left: 0.4rem;
+            margin-top: 0.3rem;
+    }
+
+    .resultText{
+        font-size: 1.6rem;
+        display: inline;
+        margin-left: 2.5rem;
+
+
+    }

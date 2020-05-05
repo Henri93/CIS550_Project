@@ -74,9 +74,64 @@ let signup = function(req, res, next) {
   	});
 };
 
+/*
+ * Route for getting friends of a user_id
+ */
+let getFriends = function(req, res, next) {
+    var id = req.query.id;
+    
+    db.getFriends({id: id}, function(data, err) {
+        if(data == null && err != null){
+            //error getting businesses of area
+            res.json({success: false, err: err});
+        }else{
+            res.json({success: true, friends: data});
+        }
+      });
+}
+
+/*
+ * Route for adding friends for a user
+ */
+let addFriend = function(req, res, next) {
+	var user_id = req.body.user_id;
+	var friend_id = req.body.friend_id;
+	
+	db.addFriend(user_id, friend_id, function(data, err) {
+		if(data == null && err != null){
+			//error signing up
+			res.json({success: false, err: err});
+		}else{
+            //return success
+            res.json({success: true, res: data});
+		}
+  	});
+};
+
+/*
+ * Route for determining if user is a friend
+ */
+let isFriend = function(req, res, next) {
+	var user_id = req.query.user_id;
+	var friend_id = req.query.friend_id;
+	
+	db.isFriend(user_id, friend_id, function(data, err) {
+		if(data == null && err != null){
+			//error signing up
+			res.json({success: false, err: err});
+		}else{
+            //return success
+            res.json({success: true, isFriend: data});
+		}
+  	});
+};
+
 module.exports = { 
     login: login,
     getProfile: getProfile,
+    getFriends: getFriends,
     signup: signup,
+    addFriend: addFriend,
+    isFriend: isFriend,
     isAuthenticated:isAuthenticated
 }

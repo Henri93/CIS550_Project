@@ -103,14 +103,16 @@ class MapCreator extends React.Component {
                 lng: value.longitude
               }}
               onClick={() => {
-                var cats = value.categories.replace(";",", ")
+                var cats = value.categories.replace(/\;/g, " •\xa0");
+
                 this.setState({
                   selectedPark: value,
                   cats:cats
                 });
               }}
               icon={{
-                scaledSize: new window.google.maps.Size(25, 25)
+                url: 'https://www.pinclipart.com/picdir/big/174-1747068_vector-graphics-google-map-marker-green-clipart.png',
+                scaledSize: new window.google.maps.Size(27, 45)
               }}
             />
           )
@@ -140,7 +142,7 @@ class MapCreator extends React.Component {
                 starSpacing="0.1rem"
                 name='rating'
               />
-              <p style={{"display":"inline", "marginTop":"1rem","marginLeft":"1rem","verticalAlign":"top", "fontSize":"1.5rem"}}>{this.state.selectedPark.review_count}</p>
+              <p style={{"display":"inline", "marginTop":"1rem","marginLeft":"1rem","verticalAlign":"top", "fontSize":"1.5rem"}}>• {this.state.selectedPark.review_count}</p>
               <br></br>
               {/* <p>{this.state.selectedPark.neighborhood}</p> */}
               <p style={{"color":"#758a8a","marginTop":"0.3rem"}}>{this.state.cats}</p>
@@ -155,19 +157,19 @@ class MapCreator extends React.Component {
   }
 }
 
-const MapWrapped = withScriptjs(withGoogleMap(MapCreator));
+export const MapWrapped = withScriptjs(withGoogleMap(MapCreator));
 
 export default function Map(props) {
   return (
     <div style={{ width: "100vw", height: "94vh" }}>
           <PageNavbar hide_search={false} active="Map" loggedInUser={props.loggedInUser} />
 
-      { /*<MapWrapped
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAi8On2sh9wpXhquXfaDcdpMl_JmDbhBO0`}
+      <MapWrapped
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100%` }} />}
         mapElement={<div style={{ height: `100%` }} />}
-      />  */}
+      />  
     </div>
   );
 }
