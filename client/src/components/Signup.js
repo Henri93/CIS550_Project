@@ -75,7 +75,7 @@ export default function Signup(props) {
 
         </form>
         <div className = "pStyle">
-        <a  className = "aStl" href = "login">Back to login</a>
+        <a  className = "aStl" href = "login">Create account!</a>
       </div>
       </div>
       
