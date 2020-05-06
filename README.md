@@ -4,6 +4,10 @@ Make sure you have [yarn](https://classic.yarnpkg.com/en/docs/install/).
 
 then run 'npm run start'.
 
+# URL
+
+[http://ec2-18-234-144-118.compute-1.amazonaws.com:3000](http://ec2-18-234-144-118.compute-1.amazonaws.com:3000/)
+
 ## Available Scripts
 
 In the project directory, you can run:
