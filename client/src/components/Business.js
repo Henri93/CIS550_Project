@@ -168,9 +168,9 @@ export default class Business extends React.Component {
                                                 <p className="otherNameSpan2">{review.name.toUpperCase()[0]}</p>
                                                 <p className = "userInfoText"> <b className = "nameText3" >{review.name}</b>
                                                     <br></br>
-                                                    {review.review_count} Reviews
+                                                    {review.review_count != null ? review.review_count : 1} Reviews
                                             <br></br>
-                                                    {review.average_stars} Average Rating
+                                                    {review.average_stars != null ? review.average_stars : 3.5} Average Rating
                                             </p>
 
                                             </div>
