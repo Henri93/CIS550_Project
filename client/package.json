@@ -8,7 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.9",
     "bootstrap": "^4.4.1",
     "history": "4.9.0",
-    "jquery": "3.4.1",
+    "jquery": "3.5.0",
     "moment": "^2.22.1",
     "popper.js": "1.14.3",
     "prop-types": "^15.6.1",
