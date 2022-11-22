@@ -20,7 +20,7 @@
     "react-google-maps": "^9.4.5",
     "react-markdown": "^3.3.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "1.1.4",
+    "react-scripts": "5.0.1",
     "react-star-ratings": "2.3.0",
     "whatwg-fetch": "^2.0.4"
   },
